@@ -1,12 +1,20 @@
-import React from 'react';
-//import { connect } from 'react-redux';
+import React, { Component } from 'react';
+import Header from './Header';
+import Home from './Home';
+import AddItem from './AddItems/addItems';
+import { Route, Switch } from 'react-router-dom';
 
-class AppIndex extends React.Component {
-
+class AppIndex extends Component {
     render() {
         return (
             <div>
-              Welcome To Brewski
+                <Header />
+                <main>
+                    <Switch>
+                        <Route path="/" exact component={Home} />
+                        <Route path="/add-menu" exact component={AddItem} />
+                    </Switch>
+                </main>
             </div>
         );
     }
