@@ -1,0 +1,175 @@
+/* stylelint-disable */
+
+// Media Query Mixins
+
+@mixin xl-desktop {
+
+    // 2000px and up
+
+    @media (min-width: #{$bp-xl-desktop}) {
+        @content;
+    }
+}
+
+@mixin lg-desktop {
+
+    // 1600px - 1999px
+
+    @media (min-width: #{$bp-lg-desktop}) and (max-width: #{$bp-xl-desktop - 1px}) {
+        @content;
+    }
+}
+
+@mixin greater-than-md-desktop {
+
+    // 1600px - 1999px
+
+    @media (min-width: #{$bp-lg-desktop}) {
+        @content;
+    }
+}
+
+/* -------------------------------------
+  How To:
+
+  @include lg-desktop{ // Def. desky...
+
+  Styles Go Here
+
+  }
+
+  E.G:
+
+  p {
+  font-size: 16px;
+
+    @include lg-desktop { // Def. desky...
+      font-size: 18px;
+    }
+  }
+
+  Awesome consistent media queries!
+
+  P.S - Please use media queries in situ not at the end
+
+  --------------------------------------
+*/
+
+@mixin md-desktop {
+
+    // 1200px - 1599px
+
+    @media (min-width: #{$bp-md-desktop}) and (max-width: #{$bp-lg-desktop - 1px}) {
+        @content;
+    }
+}
+
+@mixin sm-desktop {
+
+    // 1024px - 1199px
+
+    @media (min-width: #{$bp-tab-land}) and (max-width: #{$bp-md-desktop - 1px}) {
+        @content;
+    }
+}
+
+@mixin tab-land {
+
+    // 769px - 1024px
+
+    @media (min-width: #{$bp-tab-port}) and (max-width: #{$bp-tab-land}) {
+        @content;
+    }
+}
+
+@mixin less-than-tab-land {
+
+    //  < 1024px
+
+    @media (max-width: #{$bp-tab-land - 1px}) {
+        @content;
+    }
+}
+
+@mixin less-than-ipad-port {
+
+    // < 768px
+
+    @media (max-width: #{$bp-tab-port}) {
+        @content;
+    }
+}
+
+@mixin less-than-ipad {
+
+    // < 768px
+
+    @media (max-width: #{$bp-tab-port - 1px}) {
+        @content;
+    }
+}
+
+@mixin greater-than-ipad {
+
+    // >= 768px
+
+    @media (min-width: #{$bp-tab-port}) {
+        @content;
+    }
+}
+
+@mixin tab-port {
+
+    //  415px - 768px
+
+    @media (min-width: #{$bp-fablet + 1px}) and (max-width: #{$bp-tab-port}) {
+        @content;
+    }
+}
+
+@mixin fablet {
+
+    // 376px - 414px
+
+    @media (min-width: #{$bp-phone + 1px}) and (max-width: #{$bp-fablet}) {
+        @content;
+    }
+}
+
+@mixin less-than-fablet {
+
+    // <= 768px
+
+    @media (max-width: #{$bp-fablet}) {
+        @content;
+    }
+}
+
+@mixin iphone-port {
+
+    //  667px - 415px
+
+    @media (min-width: #{415px + 1px}) and (max-width: #{667px}) {
+        @content;
+    }
+}
+
+@mixin mobile-lg {
+
+    //  376px - 415px
+
+    @media (min-width: #{$bp-phone + 1px}) and (max-width: #{415px}) {
+        @content;
+    }
+}
+
+@mixin mobile {
+
+    // <= 375px
+
+    @media (max-width: #{$bp-phone}) {
+        @content;
+    }
+}
+
+/* stylelint-enable */
