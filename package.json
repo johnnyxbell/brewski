@@ -58,7 +58,6 @@
     "json-loader": "^0.5.4",
     "license-banner-webpack-plugin": "^0.0.4",
     "lodash": "^4.17.4",
-    "node-sass": "^4.5.2",
     "nodemon": "^1.11.0",
     "npm": "^5.0.3",
     "nyan-progress-webpack-plugin": "^1.2.0",
