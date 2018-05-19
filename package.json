@@ -58,6 +58,8 @@
     "json-loader": "^0.5.4",
     "license-banner-webpack-plugin": "^0.0.4",
     "lodash": "^4.17.4",
+    "material-ui": "^0.20.1",
+    "node-sass": "^4.9.0",
     "nodemon": "^1.11.0",
     "npm": "^5.0.3",
     "nyan-progress-webpack-plugin": "^1.2.0",
@@ -75,6 +77,9 @@
     "styled-components": "^2.1.2",
     "stylelint-webpack-plugin": "^0.7.0",
     "system-bell-webpack-plugin": "^1.0.0",
+    "typeface-hind": "^0.0.54",
+    "typeface-roboto": "^0.0.54",
+    "typeface-sunflower": "^0.0.58",
     "url-loader": "^0.6.2",
     "webpack": "^3.5.5",
     "webpack-dev-server": "2.4.1"
