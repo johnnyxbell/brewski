@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 
 class Home extends Component {
     render() {
-        const { googleData, beers } = this.props;
+        const { googleData, beerList } = this.props;
         console.log(googleData);
-        console.log('beers', beers);
+        console.log('beers', beerList);
         return (
             <div>
                 <h1>Home</h1>

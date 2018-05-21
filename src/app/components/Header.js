@@ -75,8 +75,9 @@ class Header extends Component {
     }
 
     render() {
-        const { googleData } = this.props;
-        console.log('header', googleData);
+        const { googleData, beerList } = this.props;
+        console.log('header', beerList);
+        console.log('this.props', this.props);
         return (
             <div>
                 <HeaderPanel>
@@ -99,11 +100,13 @@ class Header extends Component {
 }
 
 const mapStateToProps = state => ({
-    googleData: state.googleData
+    googleData: state.googleData,
+    beerList: state.beerList
 });
 
 const mapDispatchToProps = dispatch => ({
-    saveGoogleData: data => dispatch(saveGoogleData(data))
+    saveGoogleData: data => dispatch(saveGoogleData(data)),
+    saveBeers: data => dispatch(saveBeers(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

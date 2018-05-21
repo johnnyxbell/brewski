@@ -8,6 +8,6 @@ export function saveGoogleData(data) {
     return { type: SAVE_GOOGLE_DATA, payload: data };
 }
 
-export function saveBeers(data) {
-    return { type: SAVE_BEERS, payload: data };
+export function saveBeers(beerList) {
+    return { type: SAVE_BEERS, payload: beerList };
 }

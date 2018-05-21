@@ -2,8 +2,8 @@ import { SET_USERNAME, SAVE_GOOGLE_DATA, SAVE_BEERS } from './actions';
 
 const DEFAULT_STATE = {
     userName: '',
-    googleData: {},
-    beerList: []
+    beerList: {},
+    googleData: {}
 };
 
 const setUsername = (state, action) => Object.assign({}, state, { userName: action.payload });
