@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 
 class Home extends Component {
     render() {
-        const { googleData } = this.props;
+        const { googleData, beers } = this.props;
         console.log(googleData);
+        console.log('beers', beers);
         return (
             <div>
                 <h1>Home</h1>
-                <p>{`Welcome Back ${googleData.displayName}`}</p>
+                <p>{`Welcome back, ${googleData.displayName}`}</p>
             </div>
         );
     }

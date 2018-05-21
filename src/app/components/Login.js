@@ -64,6 +64,7 @@ class Login extends Component {
             if (user) {
                 setUsername(user.displayName);
                 saveGoogleData(user);
+                console.log(saveGoogleData(user));
                 history.push('/');
             }
         });

@@ -3,25 +3,86 @@ import firebase from './firebase';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-const AddBrewWraper = styled.form`
+const AddBrewWrapper = styled.div`
     box-shadow: 0 1px 17px 0 rgba(0, 0, 0, 0.07);
     text-align: right;
     padding: 30px 20px;
     button {
+        background-color: #006ab6;
+        border-radius: 3px;
+        padding: 10px 35px;
+        width: auto;
+        font-size: 13px;
+        text-align: center;
+        cursor: pointer;
+        color: white;
+        transition: opacity 0.5s ease;
+        border: none;
+        margin-top: 10px;
+        &:hover {
+            opacity: 0.7;
+        }
     }
 `;
 
 const AddBrewForm = styled.form`
     display: flex;
     flex-flow: row wrap;
+    justify-content: space-between;
 
-    input {
-        flex-basis: 30.5%;
-        margin: 10px;
+    label {
+        flex-basis: 30%;
+        margin: 10px 0;
         position: relative;
+        text-align: left;
+    }
+    input {
         height: 25px;
+        width: 100%;
         padding-left: 5px;
     }
+`;
+
+const DisplayBeers = styled.div``;
+
+const BeerItemWrapper = styled.div`
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    margin-left: -10px;
+    margin-right: -10px;
+`;
+
+const BeerItem = styled.div`
+    box-shadow: 0 1px 17px 0 rgba(0, 0, 0, 0.07);
+    padding: 20px;
+    flex-basis: 20%;
+    margin: 0 10px 25px 10px;
+    p{
+    padding: 0;
+    margin: 0;
+    }
+    h3 {
+    padding: 0;
+    margin: 0 0 10px 0;
+    }
+     button {
+        background-color: white;
+        border: red solid 1px;
+        color: red;
+        border-radius: 3px;
+        padding: 5px 35px;
+        width: 100%;
+        font-size: 13px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.5s ease;
+        margin-top: 15px;
+        &:hover {
+            opacity: 0.7;
+            background: red;
+            color: white;
+        }
 `;
 
 class AddBrew extends Component {
@@ -105,71 +166,95 @@ class AddBrew extends Component {
         return (
             <div>
                 <h1>Add Brewskis</h1>
-                <AddBrewWraper>
+                <AddBrewWrapper>
                     <form onSubmit={this.handleSubmit}>
                         <AddBrewForm>
-                            <input
-                                type="text"
-                                name="beerName"
-                                placeholder="Whats the name of the beer?"
-                                onChange={this.handleChange}
-                                value={this.state.beerName}
-                            />
-                            <input
-                                type="text"
-                                name="beerType"
-                                placeholder="Stout, Larger, IPA, etc."
-                                onChange={this.handleChange}
-                                value={this.state.beerType}
-                            />
-                            <input
-                                type="text"
-                                name="ABV"
-                                placeholder="5.6%"
-                                onChange={this.handleChange}
-                                value={this.state.ABV}
-                            />
-                            <input
-                                type="text"
-                                name="country"
-                                placeholder="Brooklyn, New York"
-                                onChange={this.handleChange}
-                                value={this.state.country}
-                            />
-                            <input
-                                type="text"
-                                name="size"
-                                placeholder="10oz, 14oz, etc"
-                                onChange={this.handleChange}
-                                value={this.state.size}
-                            />
-                            <input
-                                type="text"
-                                name="price"
-                                placeholder="$5"
-                                onChange={this.handleChange}
-                                value={this.state.price}
-                            />
+                            <label>
+                                Name of beer
+                                <input
+                                    type="text"
+                                    name="beerName"
+                                    placeholder="Lagunitas, Fat Yak, etc"
+                                    onChange={this.handleChange}
+                                    value={this.state.beerName}
+                                />
+                            </label>
+
+                            <label>
+                                Type
+                                <input
+                                    type="text"
+                                    name="beerType"
+                                    placeholder="Stout, Larger, IPA, etc."
+                                    onChange={this.handleChange}
+                                    value={this.state.beerType}
+                                />
+                            </label>
+                            <label>
+                                ABV
+                                <input
+                                    type="text"
+                                    name="ABV"
+                                    placeholder="5.6%"
+                                    onChange={this.handleChange}
+                                    value={this.state.ABV}
+                                />
+                            </label>
+                            <label>
+                                Origin
+                                <input
+                                    type="text"
+                                    name="country"
+                                    placeholder="Brooklyn, New York"
+                                    onChange={this.handleChange}
+                                    value={this.state.country}
+                                />
+                            </label>
+                            <label>
+                                Size
+                                <input
+                                    type="text"
+                                    name="size"
+                                    placeholder="10oz, 14oz, etc"
+                                    onChange={this.handleChange}
+                                    value={this.state.size}
+                                />
+                            </label>
+                            <label>
+                                Cost
+                                <input
+                                    type="text"
+                                    name="price"
+                                    placeholder="$5"
+                                    onChange={this.handleChange}
+                                    value={this.state.price}
+                                />
+                            </label>
                         </AddBrewForm>
-                        <button>Add Brewski</button>
+                        <button>Add Brewski 🍻</button>
                     </form>
-                </AddBrewWraper>
+                </AddBrewWrapper>
                 <div>
-                    <div className="display-item">
-                        {this.state.beers.map(beer => {
-                            return (
-                                <div key={beer.id}>
-                                    <h2>{beer.beerName}</h2>
-                                    <p>{beer.beerType}</p>
-                                    <p>{beer.ABV}</p>
-                                    <p>{beer.country}</p>
-                                    <p>{beer.size}</p>
-                                    <p>{beer.price}</p>
-                                    <button onClick={() => this.removeItem(beer.id)}>Remove Brewski</button>
-                                </div>
-                            );
-                        })}
-                    </div>
+                    <DisplayBeers>
+                        <h2>Beer List</h2>
+                        <BeerItemWrapper>
+                            {this.state.beers.map(beer => {
+                                return (
+                                    <BeerItem key={beer.id}>
+                                        <h3>{beer.beerName}</h3>
+                                        <p>
+                                            {beer.beerType}, ABV - {beer.ABV}
+                                        </p>
+                                        <p>{beer.country}</p>
+                                        <p>
+                                            {beer.size}, {beer.price}
+                                        </p>
+                                        <button onClick={() => this.removeItem(beer.id)}>Remove Brewski</button>
+                                    </BeerItem>
+                                );
+                            })}
+                        </BeerItemWrapper>
+                    </DisplayBeers>
                 </div>
             </div>
         );
