@@ -19,7 +19,7 @@ const HeaderPanel = styled.div`
         height: 50px;
         width: auto;
         padding: 10px 0px 10px 25px;
-        margin-right: 30px;
+        margin-right: 15px;
     }
 `;
 
@@ -29,7 +29,7 @@ const Menu = styled.div`
     a {
         color: #ffffff;
         text-decoration: none;
-        margin-right: 15px;
+        margin: 0 15px;
         font-family: 'roboto', sans-serif;
     }
 `;
@@ -84,6 +84,9 @@ class Header extends Component {
                         <Link to="/">{logo}</Link>
                         <Link to="/">Home</Link>
                         <Link to="/add-brews">Add Brews</Link>
+                        <Link to="/add-locations">Add Locations</Link>
+                        <Link to="/manage-boards">Manage Boards</Link>
+                        <Link to="/keg-health">Keg Heath</Link>
                     </Menu>
                     <User onClick={this.toggleHidden.bind(this)}>
                         <img src={googleData.photoURL} />

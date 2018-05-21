@@ -55,8 +55,11 @@ class UserMenu extends Component {
                         G'day <strong>{googleData.displayName}</strong>, you legend
                     </li>
                     <li>
+                        <Link to="/my-account">My Account</Link>
+                    </li>
+                    <li>
                         <Link to="/login" onClick={this.logout}>
-                            logout
+                            Logout
                         </Link>
                     </li>
                 </ul>
