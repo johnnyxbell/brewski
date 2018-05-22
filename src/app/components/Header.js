@@ -79,7 +79,7 @@ class Header extends Component {
         console.log('header', beerList);
         console.log('this.props', this.props);
         return (
-            <div>
+            <div className="header">
                 <HeaderPanel>
                     <Menu>
                         <Link to="/">{logo}</Link>

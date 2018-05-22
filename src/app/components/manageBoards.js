@@ -26,6 +26,24 @@ const BeerItem = styled.div`
     }
 `;
 
+const Button = styled.a`
+    background-color: #006ab6;
+    border-radius: 3px;
+    padding: 10px 35px;
+    width: auto;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+    color: white;
+    transition: opacity 0.5s ease;
+    border: none;
+    margin-top: 10px;
+    text-decoration: none;
+    &:hover {
+        opacity: 0.7;
+    }
+`;
+
 class ManageBoards extends Component {
     constructor() {
         super();
@@ -104,6 +122,7 @@ class ManageBoards extends Component {
     }
 
     render() {
+        const { googleData } = this.props;
         return (
             <div>
                 <h1>Manage Boards</h1>
@@ -112,9 +131,9 @@ class ManageBoards extends Component {
                     unlock multiple
                 </p>
                 <BeerItemWrapper>{this.loadBeers()}</BeerItemWrapper>
-                <a href="/board" target="_blank">
+                <Button href={`/board-${googleData.uid}`} target="_blank">
                     View my public board
-                </a>
+                </Button>
             </div>
         );
     }

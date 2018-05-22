@@ -58,7 +58,7 @@ class UserMenu extends Component {
                         <Link to="/my-account">My Account</Link>
                     </li>
                     <li>
-                        <a href="mailto:hi@johnnybell.io">Upgrade</a>
+                        <a href="mailto:hi@johnnybell.io">Upgrade 🚀</a>
                     </li>
                     <li>
                         <Link to="/login" onClick={this.logout}>

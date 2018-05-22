@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import { saveGoogleData } from './actionCreators';
 import 'typeface-hind';
 import 'typeface-roboto';
+import Board from './Board';
 
 const Main = styled.div`
     padding: 25px 50px;
@@ -22,6 +23,13 @@ const Main = styled.div`
 injectGlobal`
   body {
     margin: 0;
+  }
+  a {
+  color: darkgrey;
+  text-decoration: none;
+  :hover {
+  text-decoration: underline;
+  }
   }
 `;
 
@@ -39,7 +47,7 @@ class AppIndex extends Component {
     }
 
     render() {
-        console.log('what is this', this.props);
+        const { googleData } = this.props;
         return (
             <div>
                 <Header />
@@ -51,6 +59,7 @@ class AppIndex extends Component {
                         <Route path="/manage-boards" exact component={ManageBoards} />
                         <Route path="/keg-health" exact component={KegHealth} />
                         <Route path="/my-account" exact component={MyAccount} />
+                        <Route path={`/board-${googleData.uid}`} component={Board} />
                     </Switch>
                 </Main>
             </div>
