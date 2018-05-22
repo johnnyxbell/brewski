@@ -78,11 +78,15 @@ class Board extends Component {
             return <div>loading...</div>;
         }
     }
-
     render() {
         return (
             <div>
                 <div>{this.loadBeers()}</div>
+                <style>{`
+          .header {
+            display: none!important;
+           }
+        `}</style>
             </div>
         );
     }

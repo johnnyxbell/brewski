@@ -140,8 +140,8 @@ class ManageBoards extends Component {
             <div>
                 <h1>Manage Boards</h1>
                 <p>
-                    You currently only have access to a single board, <a href="mailto:hi@johnnybell.io">upgrade</a> to
-                    unlock multiple
+                    We are currently working on multiple boards / locations.{' '}
+                    <a href="mailto:hi@johnnybell.io">be the first to find out</a> when its available
                 </p>
                 <BeerItemWrapper>{this.loadBeers()}</BeerItemWrapper>
                 {this.loadButton()}
