@@ -12,6 +12,7 @@ const DuplicatePackageCheckerPlugin = require('duplicate-package-checker-webpack
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const PACKAGE = require('./package.json');
 const FlowBabelWebpackPlugin = require('flow-babel-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const sourcePath = path.join(__dirname, './src');
 const staticsPath = path.join(__dirname, './build');
@@ -55,6 +56,9 @@ module.exports = function(env) {
                     comments: false
                 }
             }),
+            new CopyWebpackPlugin([
+                {from:'./template/_redirects'}
+            ]),
             new CompressionPlugin({
                 asset: '[path].gz[query]',
                 algorithm: 'gzip',
