@@ -34,36 +34,54 @@ injectGlobal`
 `;
 
 class AppIndex extends Component {
+    constructor() {
+        super();
+        this.state = {
+            loading: false
+        };
+    }
+
     componentDidMount() {
         const { history } = this.props;
         auth.onAuthStateChanged(user => {
             if (user) {
                 saveGoogleData(user);
                 console.log('googleData', saveGoogleData(user));
+                this.setState({
+                    loading: true
+                });
             } else {
                 history.push('/login');
             }
         });
     }
 
-    render() {
+    initLoad() {
         const { googleData } = this.props;
-        return (
-            <div>
-                <Header />
-                <Main>
-                    <Switch>
-                        <Route path="/" exact component={Home} />
-                        <Route path="/add-brews" exact component={AddBrew} />
-                        <Route path="/add-locations" exact component={AddLocation} />
-                        <Route path="/manage-boards" exact component={ManageBoards} />
-                        <Route path="/keg-health" exact component={KegHealth} />
-                        <Route path="/my-account" exact component={MyAccount} />
-                        <Route path={`/board-${googleData.uid}`} component={Board} />
-                    </Switch>
-                </Main>
-            </div>
-        );
+        if (this.state.loading === true) {
+            return (
+                <div>
+                    <Header />
+                    <Main>
+                        <Switch>
+                            <Route path="/" exact component={Home} />
+                            <Route path="/add-brews" exact component={AddBrew} />
+                            <Route path="/add-locations" exact component={AddLocation} />
+                            <Route path="/manage-boards" exact component={ManageBoards} />
+                            <Route path="/keg-health" exact component={KegHealth} />
+                            <Route path="/my-account" exact component={MyAccount} />
+                            <Route path={`/board-${googleData.uid}`} component={Board} />
+                        </Switch>
+                    </Main>
+                </div>
+            );
+        } else {
+            return <div>Loading...</div>;
+        }
+    }
+
+    render() {
+        return <div>{this.initLoad()}</div>;
     }
 }
 
