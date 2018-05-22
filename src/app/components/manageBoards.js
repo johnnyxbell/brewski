@@ -14,7 +14,8 @@ const BeerItemWrapper = styled.div`
 const BeerItem = styled.div`
     box-shadow: 0 1px 17px 0 rgba(0, 0, 0, 0.07);
     padding: 20px;
-    flex-basis: 20%;
+    flex: 1 0 20%;
+    max-width: 20%;
     margin: 0 10px 25px 10px;
     p {
         padding: 0;
@@ -117,12 +118,24 @@ class ManageBoards extends Component {
                 </BeerItem>
             ));
         } else {
-            return <div>loading...</div>;
+            return '';
+        }
+    }
+
+    loadButton() {
+        const { googleData } = this.props;
+        if (this.state.beers.length) {
+            return (
+                <Button href={`/board-${googleData.uid}`} target="_blank">
+                    View my public board
+                </Button>
+            );
+        } else {
+            return '';
         }
     }
 
     render() {
-        const { googleData } = this.props;
         return (
             <div>
                 <h1>Manage Boards</h1>
@@ -131,9 +144,7 @@ class ManageBoards extends Component {
                     unlock multiple
                 </p>
                 <BeerItemWrapper>{this.loadBeers()}</BeerItemWrapper>
-                <Button href={`/board-${googleData.uid}`} target="_blank">
-                    View my public board
-                </Button>
+                {this.loadButton()}
             </div>
         );
     }

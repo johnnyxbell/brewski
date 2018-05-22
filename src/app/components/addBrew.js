@@ -56,7 +56,8 @@ const BeerItemWrapper = styled.div`
 const BeerItem = styled.div`
     box-shadow: 0 1px 17px 0 rgba(0, 0, 0, 0.07);
     padding: 20px;
-    flex-basis: 20%;
+    flex: 1 0 20%;
+    max-width: 22%;
     margin: 0 10px 25px 10px;
     p{
     padding: 0;
@@ -162,6 +163,62 @@ class AddBrew extends Component {
         });
     }
 
+    onRender(googleData) {
+        const beerRef = firebase.database().ref(`${googleData.uid}/beer`);
+        beerRef.on('value', snapshot => {
+            let beers = snapshot.val();
+            let newState = [];
+            for (let beer in beers) {
+                newState.push({
+                    id: beer,
+                    beerName: beers[beer].beerName,
+                    beerType: beers[beer].beerType,
+                    ABV: beers[beer].ABV,
+                    country: beers[beer].country,
+                    size: beers[beer].size,
+                    price: beers[beer].price
+                });
+            }
+            this.setState({
+                beers: newState
+            });
+        });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.googleData !== nextProps.googleData) {
+            this.onRender(nextProps.googleData);
+        }
+    }
+
+    loadBeers() {
+        if (this.state.beers.length) {
+            return this.state.beers.map(beer => (
+                <BeerItem key={beer.id}>
+                    <h3>{beer.beerName}</h3>
+                    <p>
+                        {beer.beerType}, ABV - {beer.ABV}
+                    </p>
+                    <p>{beer.country}</p>
+                    <p>
+                        {beer.size}, {beer.price}
+                    </p>
+                    <button onClick={() => this.removeItem(beer.id)}>Remove Brewski</button>
+                </BeerItem>
+            ));
+        } else {
+            return '';
+        }
+    }
+
+    loadTitle() {
+        if (this.state.beers.length) {
+            return <h2>Beer List</h2>;
+        } else {
+            return '';
+        }
+    }
+
     render() {
         console.log('state in addbrew', this.state);
         return (
@@ -237,24 +294,8 @@ class AddBrew extends Component {
                 </AddBrewWrapper>
                 <div>
                     <DisplayBeers>
-                        <h2>Beer List</h2>
-                        <BeerItemWrapper>
-                            {this.state.beers.map(beer => {
-                                return (
-                                    <BeerItem key={beer.id}>
-                                        <h3>{beer.beerName}</h3>
-                                        <p>
-                                            {beer.beerType}, ABV - {beer.ABV}
-                                        </p>
-                                        <p>{beer.country}</p>
-                                        <p>
-                                            {beer.size}, {beer.price}
-                                        </p>
-                                        <button onClick={() => this.removeItem(beer.id)}>Remove Brewski</button>
-                                    </BeerItem>
-                                );
-                            })}
-                        </BeerItemWrapper>
+                        {this.loadTitle()}
+                        <BeerItemWrapper>{this.loadBeers()}</BeerItemWrapper>
                     </DisplayBeers>
                 </div>
             </div>
