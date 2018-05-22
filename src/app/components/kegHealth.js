@@ -7,7 +7,10 @@ class KegHealth extends Component {
         return (
             <div>
                 <h1>Keg Health</h1>
-                <p>Coming soon...</p>
+                <p>
+                    We are currently working with distributors to allow this feature. Register your interest and you
+                    will be added to the beta testers
+                </p>
             </div>
         );
     }

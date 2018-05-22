@@ -7,7 +7,10 @@ class AddLocations extends Component {
         return (
             <div>
                 <h1>Add Locations</h1>
-                <p>Coming soon...</p>
+                <p>
+                    You currently only have access to a single location <a href="mailto:hi@johnnybell.io">upgrade</a> to
+                    unlock
+                </p>
             </div>
         );
     }

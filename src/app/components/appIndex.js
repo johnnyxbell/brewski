@@ -39,7 +39,6 @@ class AppIndex extends Component {
     }
 
     render() {
-        //const { googleData, beerList } = this.props;
         console.log('what is this', this.props);
         return (
             <div>

@@ -1,6 +1,30 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import firebase from './firebase';
+import styled from 'styled-components';
+
+const BeerItemWrapper = styled.div`
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    margin-left: -10px;
+    margin-right: -10px;
+`;
+
+const BeerItem = styled.div`
+    box-shadow: 0 1px 17px 0 rgba(0, 0, 0, 0.07);
+    padding: 20px;
+    flex-basis: 20%;
+    margin: 0 10px 25px 10px;
+    p {
+        padding: 0;
+        margin: 0;
+    }
+    h3 {
+        padding: 0;
+        margin: 0 0 10px 0;
+    }
+`;
 
 class ManageBoards extends Component {
     constructor() {
@@ -63,7 +87,7 @@ class ManageBoards extends Component {
     loadBeers() {
         if (this.state.beers.length) {
             return this.state.beers.map(beer => (
-                <div key={beer.id}>
+                <BeerItem key={beer.id}>
                     <h3>{beer.beerName}</h3>
                     <p>
                         {beer.beerType}, ABV - {beer.ABV}
@@ -72,7 +96,7 @@ class ManageBoards extends Component {
                     <p>
                         {beer.size}, {beer.price}
                     </p>
-                </div>
+                </BeerItem>
             ));
         } else {
             return <div>loading...</div>;
@@ -83,7 +107,14 @@ class ManageBoards extends Component {
         return (
             <div>
                 <h1>Manage Boards</h1>
-                {this.loadBeers()}
+                <p>
+                    You currently only have access to a single board, <a href="mailto:hi@johnnybell.io">upgrade</a> to
+                    unlock multiple
+                </p>
+                <BeerItemWrapper>{this.loadBeers()}</BeerItemWrapper>
+                <a href="/board" target="_blank">
+                    View my public board
+                </a>
             </div>
         );
     }
