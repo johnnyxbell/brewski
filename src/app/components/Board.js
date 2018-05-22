@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import firebase from './firebase';
+import Loading from './Loading';
 
 class Board extends Component {
     constructor() {
@@ -75,7 +76,7 @@ class Board extends Component {
                 </div>
             ));
         } else {
-            return <div>loading...</div>;
+            return <Loading />;
         }
     }
     render() {
@@ -85,6 +86,10 @@ class Board extends Component {
                 <style>{`
           .header {
             display: none!important;
+           }
+           body {
+           margin:0!important;
+           padding:0!important!
            }
         `}</style>
             </div>

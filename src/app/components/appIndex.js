@@ -14,6 +14,7 @@ import { saveGoogleData } from './actionCreators';
 import 'typeface-hind';
 import 'typeface-roboto';
 import Board from './Board';
+import Loading from './Loading';
 
 const Main = styled.div`
     padding: 25px 50px;
@@ -76,7 +77,11 @@ class AppIndex extends Component {
                 </div>
             );
         } else {
-            return <div>Loading...</div>;
+            return (
+                <div>
+                    <Loading />
+                </div>
+            );
         }
     }
 
