@@ -14,7 +14,6 @@ class MyAccount extends Component {
 }
 
 const mapStateToProps = state => ({
-    userName: state.userName,
     googleData: state.googleData
 });
 

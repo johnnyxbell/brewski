@@ -5,6 +5,7 @@ import 'babel-polyfill';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './app/components/store';
+
 //components
 import AppIndex from './app/components/appIndex';
 import Login from './app/components/Login';

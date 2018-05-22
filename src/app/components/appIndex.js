@@ -10,10 +10,9 @@ import { Route, Switch } from 'react-router-dom';
 import styled, { injectGlobal } from 'styled-components';
 import { auth } from './firebase';
 import { connect } from 'react-redux';
-import { saveGoogleData, saveBeers } from './actionCreators';
+import { saveGoogleData } from './actionCreators';
 import 'typeface-hind';
 import 'typeface-roboto';
-import firebase from './firebase';
 
 const Main = styled.div`
     padding: 25px 50px;
@@ -33,12 +32,6 @@ class AppIndex extends Component {
             if (user) {
                 saveGoogleData(user);
                 console.log('googleData', saveGoogleData(user));
-                const beerRef = firebase.database().ref(`${user.uid}`);
-                beerRef.on('value', snapshot => {
-                    let addBeers = snapshot.val();
-                    saveBeers(addBeers);
-                    console.log('BeerData', saveBeers(addBeers));
-                });
             } else {
                 history.push('/login');
             }
@@ -67,13 +60,11 @@ class AppIndex extends Component {
 }
 
 const mapStateToProps = state => ({
-    googleData: state.googleData,
-    beerList: state.beerList
+    googleData: state.googleData
 });
 
 const mapDispatchToProps = dispatch => ({
-    saveGoogleData: data => dispatch(saveGoogleData(data)),
-    saveBeers: data => dispatch(saveBeers(data))
+    saveGoogleData: data => dispatch(saveGoogleData(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppIndex);

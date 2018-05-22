@@ -163,6 +163,7 @@ class AddBrew extends Component {
     }
 
     render() {
+        console.log('state in addbrew', this.state);
         return (
             <div>
                 <h1>Add Brewskis</h1>
