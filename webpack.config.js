@@ -65,7 +65,7 @@ module.exports = function(env) {
                 test: /\.js$|\.css$|\.html$/,
                 threshold: 0,
                 minRatio: 0.9,
-                deleteOriginalAssets: false
+                deleteOriginalAssets: true
             }),
             new HtmlWebpackPlugin({
                 inject: false,

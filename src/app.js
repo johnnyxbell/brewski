@@ -5,6 +5,8 @@ import 'babel-polyfill';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './app/components/store';
+/*eslint-disable*/
+import Styles from './app/assets/scss/style.scss';
 
 //components
 import AppIndex from './app/components/appIndex';

@@ -11,8 +11,6 @@ import styled, { injectGlobal } from 'styled-components';
 import { auth } from './firebase';
 import { connect } from 'react-redux';
 import { saveGoogleData } from './actionCreators';
-import 'typeface-hind';
-import 'typeface-roboto';
 import Board from './Board';
 import Loading from './Loading';
 

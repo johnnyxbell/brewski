@@ -9630,14 +9630,6 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typeface-hind@^0.0.54:
-  version "0.0.54"
-  resolved "https://registry.yarnpkg.com/typeface-hind/-/typeface-hind-0.0.54.tgz#c756176def0a21d29e69fd0a04e063bc3f733830"
-
-typeface-roboto@^0.0.54:
-  version "0.0.54"
-  resolved "https://registry.yarnpkg.com/typeface-roboto/-/typeface-roboto-0.0.54.tgz#8f02c9a18d1cfa7f49381a6ff0d21ff061f38ad2"
-
 typeface-sunflower@^0.0.58:
   version "0.0.58"
   resolved "https://registry.yarnpkg.com/typeface-sunflower/-/typeface-sunflower-0.0.58.tgz#f4a2d28c1d912322db896b0ff97c901358f83df9"
