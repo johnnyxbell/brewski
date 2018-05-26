@@ -83,7 +83,6 @@ class Header extends Component {
                 <HeaderPanel>
                     <Menu>
                         <Link to="/">{logo}</Link>
-                        <Link to="/">Home</Link>
                         <Link to="/add-brews">Add Brews</Link>
                         <Link to="/add-locations">Add Locations</Link>
                         <Link to="/manage-boards">Manage Boards</Link>
