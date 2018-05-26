@@ -56,11 +56,13 @@ const UploadImage = styled.label`
     color: darkgray;
     cursor: pointer;
     font-size: 13px;
-    text-align: center;
-    padding: 20px 0;
+    display: flex;
     transition: all 0.5s ease;
-    display: block;
     width: 100%;
+    min-height: 71px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
     svg {
         height: 50px !important;
         width: 50px !important;
@@ -307,6 +309,15 @@ class AddBrew extends Component {
         }
     }
 
+    imageUpload() {
+        return (
+            <div>
+                <FontAwesomeIcon icon={faCloudUpload} />
+                Upload Image
+            </div>
+        );
+    }
+
     render() {
         const { googleData } = this.props;
         console.log('state in addbrew', this.state);
@@ -381,8 +392,7 @@ class AddBrew extends Component {
                         <UploadImageWrapper>
                             <label>Upload Image</label>
                             <UploadImage>
-                                {!this.state.image &&
-                                    !this.state.isUploading && <FontAwesomeIcon icon={faCloudUpload} />}
+                                {!this.state.image && !this.state.isUploading && this.imageUpload()}
                                 {this.state.isUploading && <SmallLoading />}
                                 {this.state.imageURL && <FontAwesomeIcon color="green" icon={faCheckCircle} />}
                                 <FileUploader
