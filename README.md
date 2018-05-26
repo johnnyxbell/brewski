@@ -16,6 +16,7 @@ todo:
 
 - Add locations
 - Close the user menu when you click away
+- Dashboard / Home ?
 
 #Version 1.x
 
