@@ -17,6 +17,9 @@ const BeerItem = styled.div`
     flex: 1 0 20%;
     max-width: 20%;
     margin: 0 10px 25px 10px;
+    img {
+        width: 100%;
+    }
     p {
         padding: 0;
         margin: 0;
@@ -66,7 +69,8 @@ class ManageBoards extends Component {
                     ABV: beers[beer].ABV,
                     country: beers[beer].country,
                     size: beers[beer].size,
-                    price: beers[beer].price
+                    price: beers[beer].price,
+                    image: beers[beer].image
                 });
             }
             this.setState({
@@ -88,7 +92,8 @@ class ManageBoards extends Component {
                     ABV: beers[beer].ABV,
                     country: beers[beer].country,
                     size: beers[beer].size,
-                    price: beers[beer].price
+                    price: beers[beer].price,
+                    image: beers[beer].image
                 });
             }
             this.setState({
@@ -107,6 +112,7 @@ class ManageBoards extends Component {
         if (this.state.beers.length) {
             return this.state.beers.map(beer => (
                 <BeerItem key={beer.id}>
+                    <img src={beer.image} />
                     <h3>{beer.beerName}</h3>
                     <p>
                         {beer.beerType}, ABV - {beer.ABV}

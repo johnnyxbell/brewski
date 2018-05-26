@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import firebase from './firebase';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import FileUploader from 'react-firebase-file-uploader';
+import SmallLoading from './SmallLoading';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faCloudUpload from '@fortawesome/fontawesome-free-solid/faCloudUploadAlt';
+import faCheckCircle from '@fortawesome/fontawesome-free-solid/faCheckCircle';
 
 const AddBrewWrapper = styled.div`
     box-shadow: 0 1px 17px 0 rgba(0, 0, 0, 0.07);
@@ -45,6 +50,57 @@ const AddBrewForm = styled.form`
 
 const DisplayBeers = styled.div``;
 
+const UploadImage = styled.label`
+    border: 1px dashed #ccc;
+    background-color: white;
+    color: darkgray;
+    cursor: pointer;
+    font-size: 13px;
+    text-align: center;
+    padding: 20px 0;
+    transition: all 0.5s ease;
+    display: block;
+    width: 100%;
+    svg {
+        height: 50px !important;
+        width: 50px !important;
+        display: block;
+        margin: 0 auto;
+    }
+`;
+
+const UploadImageWrapper = styled.div`
+    width: 31%;
+    position: relative;
+    text-align: left;
+    margin-top: 10px;
+    img {
+        width: 100px;
+        height: 100px;
+        position: relative;
+        border: 1px solid #ccc;
+    }
+`;
+
+const Close = styled.div`
+    position: absolute;
+    top: -10px;
+    left: 85px;
+    background: white;
+    width: 30px;
+    box-shadow: 0px 0px 2px black;
+    text-align: center;
+    border-radius: 25px;
+    padding-top: 4px;
+    cursor: pointer;
+    z-index: 1;
+`;
+
+const ImageWrapper = styled.div`
+    position: relative;
+    margin-top: 30px;
+`;
+
 const BeerItemWrapper = styled.div`
     display: flex;
     flex-flow: row wrap;
@@ -59,6 +115,9 @@ const BeerItem = styled.div`
     flex: 1 0 20%;
     max-width: 22%;
     margin: 0 10px 25px 10px;
+    img {
+    width: 100%;
+    }
     p{
     padding: 0;
     margin: 0;
@@ -96,7 +155,11 @@ class AddBrew extends Component {
             country: '',
             size: '',
             price: '',
-            beers: []
+            beers: [],
+            image: '',
+            imageURL: '',
+            isUploading: false,
+            progress: 0
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -108,6 +171,25 @@ class AddBrew extends Component {
         });
     }
 
+    handleUploadStart = () => this.setState({ isUploading: true, progress: 0, imageURL: '', image: '' });
+    handleRemoveImage = () => this.setState({ imageURL: '', image: '' });
+    handleProgress = progress => this.setState({ progress });
+    handleUploadError = error => {
+        this.setState({ isUploading: false });
+        console.error(error);
+    };
+
+    handleUploadSuccess = filename => {
+        const { googleData } = this.props;
+        this.setState({ image: filename, isUploading: false });
+        firebase
+            .storage()
+            .ref('images/' + googleData.uid + '/' + this.state.beerName)
+            .child(filename)
+            .getDownloadURL()
+            .then(url => this.setState({ imageURL: url }));
+    };
+
     handleSubmit(e) {
         e.preventDefault();
         const { googleData } = this.props;
@@ -118,7 +200,8 @@ class AddBrew extends Component {
             ABV: this.state.ABV,
             country: this.state.country,
             size: this.state.size,
-            price: this.state.price
+            price: this.state.price,
+            image: this.state.imageURL
         };
         beerRef.push(beer);
         this.setState({
@@ -127,7 +210,9 @@ class AddBrew extends Component {
             ABV: '',
             country: '',
             size: '',
-            price: ''
+            price: '',
+            image: '',
+            imageURL: ''
         });
         beerRef.on('value', snapshot => {
             console.log(snapshot.val());
@@ -154,7 +239,8 @@ class AddBrew extends Component {
                     ABV: beers[beer].ABV,
                     country: beers[beer].country,
                     size: beers[beer].size,
-                    price: beers[beer].price
+                    price: beers[beer].price,
+                    image: beers[beer].image
                 });
             }
             this.setState({
@@ -176,7 +262,8 @@ class AddBrew extends Component {
                     ABV: beers[beer].ABV,
                     country: beers[beer].country,
                     size: beers[beer].size,
-                    price: beers[beer].price
+                    price: beers[beer].price,
+                    image: beers[beer].image
                 });
             }
             this.setState({
@@ -196,6 +283,7 @@ class AddBrew extends Component {
             return this.state.beers.map(beer => (
                 <BeerItem key={beer.id}>
                     <h3>{beer.beerName}</h3>
+                    <img src={beer.image} />
                     <p>
                         {beer.beerType}, ABV - {beer.ABV}
                     </p>
@@ -220,6 +308,7 @@ class AddBrew extends Component {
     }
 
     render() {
+        const { googleData } = this.props;
         console.log('state in addbrew', this.state);
         return (
             <div>
@@ -289,6 +378,34 @@ class AddBrew extends Component {
                                 />
                             </label>
                         </AddBrewForm>
+                        <UploadImageWrapper>
+                            <label>Upload Image</label>
+                            <UploadImage>
+                                {!this.state.image &&
+                                    !this.state.isUploading && <FontAwesomeIcon icon={faCloudUpload} />}
+                                {this.state.isUploading && <SmallLoading />}
+                                {this.state.imageURL && <FontAwesomeIcon color="green" icon={faCheckCircle} />}
+                                <FileUploader
+                                    hidden
+                                    accept="image/*"
+                                    name="beerLogo"
+                                    randomizeFilename
+                                    storageRef={firebase
+                                        .storage()
+                                        .ref('images/' + googleData.uid + '/' + this.state.beerName)}
+                                    onUploadStart={this.handleUploadStart}
+                                    onUploadError={this.handleUploadError}
+                                    onUploadSuccess={this.handleUploadSuccess}
+                                    onProgress={this.handleProgress}
+                                    maxHeight={300}
+                                    maxWidth={300}
+                                />
+                            </UploadImage>
+                            <ImageWrapper>
+                                {this.state.imageURL && <Close onClick={() => this.handleRemoveImage()}>X</Close>}
+                                {this.state.imageURL && <img src={this.state.imageURL} />}
+                            </ImageWrapper>
+                        </UploadImageWrapper>
                         <button>Add Brewski 🍻</button>
                     </form>
                 </AddBrewWrapper>

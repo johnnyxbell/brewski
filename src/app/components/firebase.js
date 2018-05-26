@@ -5,7 +5,7 @@ const config = {
     authDomain: 'brewski-7c778.firebaseapp.com',
     databaseURL: 'https://brewski-7c778.firebaseio.com',
     projectId: 'brewski-7c778',
-    storageBucket: '',
+    storageBucket: 'gs://brewski-7c778.appspot.com/',
     messagingSenderId: '264186724578'
 };
 firebase.initializeApp(config);

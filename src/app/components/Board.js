@@ -24,7 +24,8 @@ class Board extends Component {
                     ABV: beers[beer].ABV,
                     country: beers[beer].country,
                     size: beers[beer].size,
-                    price: beers[beer].price
+                    price: beers[beer].price,
+                    image: beers[beer].image
                 });
             }
             this.setState({
@@ -46,7 +47,8 @@ class Board extends Component {
                     ABV: beers[beer].ABV,
                     country: beers[beer].country,
                     size: beers[beer].size,
-                    price: beers[beer].price
+                    price: beers[beer].price,
+                    image: beers[beer].image
                 });
             }
             this.setState({
@@ -65,6 +67,7 @@ class Board extends Component {
         if (this.state.beers.length) {
             return this.state.beers.map(beer => (
                 <div key={beer.id}>
+                    <img src={beer.image} />
                     <h3>{beer.beerName}</h3>
                     <p>
                         {beer.beerType}, ABV - {beer.ABV}
