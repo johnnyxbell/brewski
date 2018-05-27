@@ -157,7 +157,6 @@ class AddBrew extends Component {
             country: '',
             size: '',
             price: '',
-            beers: [],
             image: '',
             imageURL: '',
             isUploading: false,
@@ -227,73 +226,22 @@ class AddBrew extends Component {
         beerRef.remove();
     }
 
-    componentDidMount() {
-        const { googleData } = this.props;
-        const beerRef = firebase.database().ref(`${googleData.uid}/beer`);
-        beerRef.on('value', snapshot => {
-            let beers = snapshot.val();
-            let newState = [];
-            for (let beer in beers) {
-                newState.push({
-                    id: beer,
-                    beerName: beers[beer].beerName,
-                    beerType: beers[beer].beerType,
-                    ABV: beers[beer].ABV,
-                    country: beers[beer].country,
-                    size: beers[beer].size,
-                    price: beers[beer].price,
-                    image: beers[beer].image
-                });
-            }
-            this.setState({
-                beers: newState
-            });
-        });
-    }
-
-    onRender(googleData) {
-        const beerRef = firebase.database().ref(`${googleData.uid}/beer`);
-        beerRef.on('value', snapshot => {
-            let beers = snapshot.val();
-            let newState = [];
-            for (let beer in beers) {
-                newState.push({
-                    id: beer,
-                    beerName: beers[beer].beerName,
-                    beerType: beers[beer].beerType,
-                    ABV: beers[beer].ABV,
-                    country: beers[beer].country,
-                    size: beers[beer].size,
-                    price: beers[beer].price,
-                    image: beers[beer].image
-                });
-            }
-            this.setState({
-                beers: newState
-            });
-        });
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (this.props.googleData !== nextProps.googleData) {
-            this.onRender(nextProps.googleData);
-        }
-    }
-
     loadBeers() {
-        if (this.state.beers.length) {
-            return this.state.beers.map(beer => (
-                <BeerItem key={beer.id}>
-                    <h3>{beer.beerName}</h3>
-                    <img src={beer.image} />
+        const { beerList } = this.props;
+        console.log('hi', beerList.beer);
+        if (beerList.beer) {
+            return Object.keys(beerList.beer).map(item => (
+                <BeerItem key={item}>
+                    <h3>{beerList.beer[item].beerName}</h3>
+                    {beerList.beer[item].image ? <img src={beerList.beer[item].image} /> : ''}
                     <p>
-                        {beer.beerType}, ABV - {beer.ABV}
+                        {beerList.beer[item].beerType}, ABV - {beerList.beer[item].ABV}
                     </p>
-                    <p>{beer.country}</p>
+                    <p>{beerList.beer[item].country}</p>
                     <p>
-                        {beer.size}, {beer.price}
+                        {beerList.beer[item].size}, {beerList.beer[item].price}
                     </p>
-                    <button onClick={() => this.removeItem(beer.id)}>Remove Brewski</button>
+                    <button onClick={() => this.removeItem(item)}>Remove Brewski</button>
                 </BeerItem>
             ));
         } else {
@@ -302,7 +250,8 @@ class AddBrew extends Component {
     }
 
     loadTitle() {
-        if (this.state.beers.length) {
+        const { beerList } = this.props;
+        if (beerList) {
             return <h2>Beer List</h2>;
         } else {
             return '';
@@ -431,7 +380,8 @@ class AddBrew extends Component {
 }
 
 const mapStateToProps = state => ({
-    googleData: state.googleData
+    googleData: state.googleData,
+    beerList: state.beerList
 });
 
 export default connect(mapStateToProps)(AddBrew);

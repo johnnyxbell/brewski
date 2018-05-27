@@ -70,6 +70,7 @@ class Header extends Component {
         auth.onAuthStateChanged(user => {
             if (user) {
                 saveGoogleData(user);
+                console.log(this.props);
             }
         });
     }
@@ -99,13 +100,11 @@ class Header extends Component {
 }
 
 const mapStateToProps = state => ({
-    googleData: state.googleData,
-    beerList: state.beerList
+    googleData: state.googleData
 });
 
 const mapDispatchToProps = dispatch => ({
-    saveGoogleData: data => dispatch(saveGoogleData(data)),
-    saveBeers: data => dispatch(saveBeers(data))
+    saveGoogleData: data => dispatch(saveGoogleData(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
