@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { auth, provider } from './firebase.js';
 import { connect } from 'react-redux';
-import { setUsername, saveGoogleData } from './actionCreators';
+import { saveGoogleData } from './actionCreators';
 import styled from 'styled-components';
 import Logo from './Logo';
+import firebase from './firebase';
 
 const LoginPanel = styled.div`
     display: flex;
@@ -57,14 +58,19 @@ class Login extends Component {
     }
 
     login() {
-        const { setUsername, history, saveGoogleData } = this.props;
+        const { history, saveGoogleData } = this.props;
         auth.signInWithPopup(provider).then(result => {
             const user = result.user;
-            alert(user);
             if (user) {
-                setUsername(user.displayName);
                 saveGoogleData(user);
                 console.log(saveGoogleData(user));
+                console.log('hello', user);
+                const userRef = firebase.database().ref(`${user.uid}`);
+                const userno = {
+                    email: user.email
+                };
+                userRef.push(userno);
+                console.log('fuck you');
                 history.push('/');
             }
         });
@@ -90,7 +96,6 @@ class Login extends Component {
 
 const mapStateToProps = state => ({ userName: state.userName });
 const mapDispatchToProps = dispatch => ({
-    setUsername: data => dispatch(setUsername(data)),
     saveGoogleData: data => dispatch(saveGoogleData(data))
 });
 

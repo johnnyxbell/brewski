@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 class Home extends Component {
     loadBeers() {
         const { beerList } = this.props;
-        console.log('hi', beerList.beer);
+        console.log('hi', beerList);
         if (beerList.beer) {
             return Object.keys(beerList.beer).map(item => (
                 <div key={item}>
@@ -12,7 +12,26 @@ class Home extends Component {
                 </div>
             ));
         } else {
-            return '';
+            return;
+        }
+    }
+
+    loadTitle() {
+        const { beerList } = this.props;
+        if (beerList.beer) {
+            return <h2>Whats on Tap</h2>;
+        } else {
+            return 'No beers on tap, Add a Beer';
+        }
+    }
+
+    initLoad() {
+        const { beerList } = this.props;
+        if (beerList) {
+            this.loadTitle();
+            this.loadBeers();
+        } else {
+            return 'loading...';
         }
     }
 
@@ -22,6 +41,7 @@ class Home extends Component {
             <div>
                 <h1>Home</h1>
                 <p>{`Welcome back ${googleData.displayName}.`}</p>
+                {this.loadTitle()}
                 {this.loadBeers()}
             </div>
         );

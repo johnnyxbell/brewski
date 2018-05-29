@@ -251,7 +251,7 @@ class AddBrew extends Component {
 
     loadTitle() {
         const { beerList } = this.props;
-        if (beerList) {
+        if (beerList.beer) {
             return <h2>Beer List</h2>;
         } else {
             return '';
