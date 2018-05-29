@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { saveGoogleData } from './actionCreators';
 import { auth } from './firebase';
+import firebase from './firebase';
 
 const UserMenuPanel = styled.div`
     width: auto;
@@ -41,6 +42,9 @@ class UserMenu extends Component {
     }
 
     logout() {
+        const { googleData } = this.props;
+        const beerRef = firebase.database().ref(`${googleData.uid}/user`);
+        beerRef.remove();
         auth.signOut().then(() => {
             saveGoogleData(null);
         });

@@ -65,12 +65,11 @@ class Login extends Component {
                 saveGoogleData(user);
                 console.log(saveGoogleData(user));
                 console.log('hello', user);
-                const userRef = firebase.database().ref(`${user.uid}`);
+                const userRef = firebase.database().ref(`${user.uid}/user`);
                 const userno = {
                     email: user.email
                 };
                 userRef.push(userno);
-                console.log('fuck you');
                 history.push('/');
             }
         });
