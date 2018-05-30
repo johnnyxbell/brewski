@@ -8,7 +8,7 @@ The ultimate bar menu screen. Update your beers online and have it automatically
 
 - Add feature to add and remove sizes, up to 3, minimum 1
 - Add form validation
-~~- If image doesn't exist then show a default~~
+- ~~If image doesn't exist then show a default~~
 - Display the panels with the images better
 - Default to the add brews page
 - Work on add beer form to make it look nicer
