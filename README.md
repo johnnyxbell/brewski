@@ -15,7 +15,7 @@ The ultimate bar menu screen. Update your beers online and have it automatically
 - Re order the beers on manage boards to update where they sit in the database
 - Style the board so it looks good on a TV
 - Make the site mobile friendly 
-- Add redux for the account data
+- ~~Add redux for the account data~~
 - update beerList to accountData
 - Edit beer and save to firebase
 - Connect jenkins to deploy to s3 bucket (uat for develop branch, prod for master branch)
