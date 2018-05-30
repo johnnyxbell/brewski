@@ -6,22 +6,21 @@ The ultimate bar menu screen. Update your beers online and have it automatically
 
 ## Version 1.0
 
-- Add feature to add and remove sizes, up to 3, minimum 1
-- Add form validation
 - ~~If image doesn't exist then show a default~~
+- ~~Add redux for the account data~~
+- ~~update beerList to userData~~
+- ~~Add feature to add and remove sizes, up to 3, minimum 1~~
+- Add form validation
 - Display the panels with the images better
-- Default to the add brews page
 - Work on add beer form to make it look nicer
 - Re order the beers on manage boards to update where they sit in the database
 - Style the board so it looks good on a TV
 - Make the site mobile friendly 
-- ~~Add redux for the account data~~
-- update beerList to accountData
-- Edit beer and save to firebase
 - Connect jenkins to deploy to s3 bucket (uat for develop branch, prod for master branch)
 
 ## Version 1.1
 
+- Edit beer and save to firebase
 - Add locations
 - Close the user menu when you click away
 - Delete a image when you remove the beer

@@ -76,8 +76,8 @@ class Header extends Component {
     }
 
     render() {
-        const { googleData, beerList } = this.props;
-        console.log('header', beerList);
+        const { googleData, userData } = this.props;
+        console.log('header', userData);
         console.log('this.props', this.props);
         return (
             <div className="header">
@@ -87,7 +87,7 @@ class Header extends Component {
                         <Link to="/add-brews">Add Brews</Link>
                         <Link to="/add-locations">Add Locations</Link>
                         <Link to="/manage-boards">Manage Boards</Link>
-                        <Link to="/keg-health">Keg Heath</Link>
+                        {/*<Link to="/keg-health">Keg Heath</Link>*/}
                     </Menu>
                     <User onClick={this.toggleHidden.bind(this)}>
                         <img src={googleData.photoURL} />

@@ -1,3 +1,3 @@
 export const SET_USERNAME = 'SET_USERNAME';
 export const SAVE_GOOGLE_DATA = 'SAVE_GOOGLE_DATA';
-export const SAVE_BEER_LIST = 'SAVE_BEER_LIST';
+export const SAVE_USER_DATA = 'SAVE_USER_DATA';

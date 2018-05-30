@@ -7,6 +7,8 @@ import SmallLoading from './SmallLoading';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faCloudUpload from '@fortawesome/fontawesome-free-solid/faCloudUploadAlt';
 import faCheckCircle from '@fortawesome/fontawesome-free-solid/faCheckCircle';
+import faPlus from '@fortawesome/fontawesome-free-solid/faPlus';
+import faMinus from '@fortawesome/fontawesome-free-solid/faMinus';
 
 const AddBrewWrapper = styled.div`
     box-shadow: 0 1px 17px 0 rgba(0, 0, 0, 0.07);
@@ -31,20 +33,24 @@ const AddBrewWrapper = styled.div`
 `;
 
 const AddBrewForm = styled.form`
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
+    display: grid;
+    grid: auto auto auto / auto auto auto;
+    grid-gap: 10px 20px;
+    align-items: end;
+    justify-items: end;
 
     label {
-        flex-basis: 30%;
-        margin: 10px 0;
-        position: relative;
+        box-sizing: border-box;
+        width: 100%;
         text-align: left;
+        align-items: end;
+        justify-items: end;
     }
     input {
         height: 25px;
         width: 100%;
         padding-left: 5px;
+        margin-left: -5px;
     }
 `;
 
@@ -111,6 +117,10 @@ const BeerItemWrapper = styled.div`
     margin-right: -10px;
 `;
 
+const AddSize = styled.div`
+    cursor: pointer;
+`;
+
 const BeerItem = styled.div`
     box-shadow: 0 1px 17px 0 rgba(0, 0, 0, 0.07);
     padding: 20px;
@@ -156,14 +166,49 @@ class AddBrew extends Component {
             ABV: '',
             country: '',
             size: '',
+            size2: '',
             price: '',
+            price2: '',
             image: '',
             imageURL: '',
             isUploading: false,
-            progress: 0
+            progress: 0,
+            sizeInput: [],
+            priceInput: []
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.appendInput = this.appendInput.bind(this);
+    }
+
+    appendInput() {
+        let newSizeInput = `size${this.state.sizeInput.length + 2}`;
+        this.setState({ sizeInput: this.state.sizeInput.concat([newSizeInput]) });
+        let newPriceInput = `price${this.state.priceInput.length + 2}`;
+        this.setState({ priceInput: this.state.priceInput.concat([newPriceInput]) });
+    }
+
+    removeInput() {
+        this.setState({
+            sizeInput: [],
+            priceInput: []
+        });
+    }
+
+    displayAddANother() {
+        if (this.state.sizeInput.length === 0) {
+            return (
+                <AddSize onClick={() => this.appendInput()}>
+                    <FontAwesomeIcon icon={faPlus} /> Add Size
+                </AddSize>
+            );
+        } else {
+            return (
+                <AddSize onClick={() => this.removeInput()}>
+                    <FontAwesomeIcon icon={faMinus} /> Remove Size
+                </AddSize>
+            );
+        }
     }
 
     handleChange(e) {
@@ -201,7 +246,9 @@ class AddBrew extends Component {
             ABV: this.state.ABV,
             country: this.state.country,
             size: this.state.size,
+            size2: this.state.size2,
             price: this.state.price,
+            price2: this.state.price2,
             image: this.state.imageURL
         };
         beerRef.push(beer);
@@ -211,9 +258,13 @@ class AddBrew extends Component {
             ABV: '',
             country: '',
             size: '',
+            size2: '',
             price: '',
+            price2: '',
             image: '',
-            imageURL: ''
+            imageURL: '',
+            sizeInput: [],
+            priceInput: []
         });
         beerRef.on('value', snapshot => {
             console.log(snapshot.val());
@@ -227,19 +278,23 @@ class AddBrew extends Component {
     }
 
     loadBeers() {
-        const { beerList } = this.props;
-        console.log('hi', beerList.beer);
-        if (beerList.beer) {
-            return Object.keys(beerList.beer).map(item => (
+        const { userData } = this.props;
+        console.log('hi', userData.beer);
+        if (userData.beer) {
+            return Object.keys(userData.beer).map(item => (
                 <BeerItem key={item}>
-                    <h3>{beerList.beer[item].beerName}</h3>
-                    {beerList.beer[item].image ? <img src={beerList.beer[item].image} /> : ''}
+                    <h3>{userData.beer[item].beerName}</h3>
+                    {userData.beer[item].image ? <img src={userData.beer[item].image} /> : ''}
                     <p>
-                        {beerList.beer[item].beerType}, ABV - {beerList.beer[item].ABV}
+                        {userData.beer[item].beerType}, ABV - {userData.beer[item].ABV}
                     </p>
-                    <p>{beerList.beer[item].country}</p>
+                    <p>{userData.beer[item].country}</p>
                     <p>
-                        {beerList.beer[item].size}, {beerList.beer[item].price}
+                        {userData.beer[item].size}, {userData.beer[item].price}
+                    </p>
+                    <p>
+                        {userData.beer[item].size2 ? `${userData.beer[item].size2},  ` : ''}
+                        {userData.beer[item].price2 ? userData.beer[item].price2 : ''}
                     </p>
                     <button onClick={() => this.removeItem(item)}>Remove Brewski</button>
                 </BeerItem>
@@ -250,8 +305,8 @@ class AddBrew extends Component {
     }
 
     loadTitle() {
-        const { beerList } = this.props;
-        if (beerList.beer) {
+        const { userData } = this.props;
+        if (userData.beer) {
             return <h2>Beer List</h2>;
         } else {
             return '';
@@ -328,7 +383,7 @@ class AddBrew extends Component {
                                 />
                             </label>
                             <label>
-                                Cost
+                                Price
                                 <input
                                     type="text"
                                     name="price"
@@ -337,7 +392,34 @@ class AddBrew extends Component {
                                     value={this.state.price}
                                 />
                             </label>
+                            {this.state.sizeInput.map(sizeInput => (
+                                <label key={sizeInput}>
+                                    Size
+                                    <input
+                                        key={sizeInput}
+                                        type="text"
+                                        name={sizeInput}
+                                        placeholder="10oz, 14oz"
+                                        onChange={this.handleChange}
+                                        value={this.state.size2}
+                                    />
+                                </label>
+                            ))}
+                            {this.state.priceInput.map(priceInput => (
+                                <label key={priceInput}>
+                                    Price
+                                    <input
+                                        key={priceInput}
+                                        type="text"
+                                        name={priceInput}
+                                        placeholder="$5"
+                                        onChange={this.handleChange}
+                                        value={this.state.price2}
+                                    />
+                                </label>
+                            ))}
                         </AddBrewForm>
+                        {this.displayAddANother()}
                         <UploadImageWrapper>
                             <label>Upload Image</label>
                             <UploadImage>
@@ -381,7 +463,7 @@ class AddBrew extends Component {
 
 const mapStateToProps = state => ({
     googleData: state.googleData,
-    beerList: state.beerList
+    userData: state.userData
 });
 
 export default connect(mapStateToProps)(AddBrew);
