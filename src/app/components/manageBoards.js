@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-//import firebase from './firebase';
 import styled from 'styled-components';
 
 const BeerItemWrapper = styled.div`
@@ -49,65 +48,6 @@ const Button = styled.a`
 `;
 
 class ManageBoards extends Component {
-    // constructor() {
-    //     super();
-    //     this.state = {
-    //         beers: []
-    //     };
-    // }
-    // componentDidMount() {
-    //     const { googleData } = this.props;
-    //     const beerRef = firebase.database().ref(`${googleData.uid}/beer`);
-    //     beerRef.on('value', snapshot => {
-    //         let beers = snapshot.val();
-    //         let newState = [];
-    //         for (let beer in beers) {
-    //             newState.push({
-    //                 id: beer,
-    //                 beerName: beers[beer].beerName,
-    //                 beerType: beers[beer].beerType,
-    //                 ABV: beers[beer].ABV,
-    //                 country: beers[beer].country,
-    //                 size: beers[beer].size,
-    //                 price: beers[beer].price,
-    //                 image: beers[beer].image
-    //             });
-    //         }
-    //         this.setState({
-    //             beers: newState
-    //         });
-    //     });
-    // }
-
-    // onRender(googleData) {
-    //     const beerRef = firebase.database().ref(`${googleData.uid}/beer`);
-    //     beerRef.on('value', snapshot => {
-    //         let beers = snapshot.val();
-    //         let newState = [];
-    //         for (let beer in beers) {
-    //             newState.push({
-    //                 id: beer,
-    //                 beerName: beers[beer].beerName,
-    //                 beerType: beers[beer].beerType,
-    //                 ABV: beers[beer].ABV,
-    //                 country: beers[beer].country,
-    //                 size: beers[beer].size,
-    //                 price: beers[beer].price,
-    //                 image: beers[beer].image
-    //             });
-    //         }
-    //         this.setState({
-    //             beers: newState
-    //         });
-    //     });
-    // }
-    //
-    // componentWillReceiveProps(nextProps) {
-    //     if (this.props.googleData !== nextProps.googleData) {
-    //         this.onRender(nextProps.googleData);
-    //     }
-    // }
-
     loadBeers() {
         const { userData } = this.props;
         console.log('hi', userData.beer);

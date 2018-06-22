@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import firebase from './firebase';
+import { database } from './firebase';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import FileUploader from 'react-firebase-file-uploader';
@@ -239,7 +239,7 @@ class AddBrew extends Component {
     handleSubmit(e) {
         e.preventDefault();
         const { googleData } = this.props;
-        const beerRef = firebase.database().ref(`${googleData.uid}/beer`);
+        const beerRef = database.ref(`${googleData.uid}/beer`);
         const beer = {
             beerName: this.state.beerName,
             beerType: this.state.beerType,
@@ -273,7 +273,7 @@ class AddBrew extends Component {
 
     removeItem(beerId) {
         const { googleData } = this.props;
-        const beerRef = firebase.database().ref(`${googleData.uid}/beer/${beerId}`);
+        const beerRef = database.ref(`${googleData.uid}/beer/${beerId}`);
         beerRef.remove();
     }
 

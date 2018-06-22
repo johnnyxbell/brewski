@@ -8,12 +8,11 @@ import KegHealth from './kegHealth';
 import MyAccount from './myAccount';
 import { Route, Switch } from 'react-router-dom';
 import styled, { injectGlobal } from 'styled-components';
-import { auth } from './firebase';
+import { auth, database } from './firebase';
 import { connect } from 'react-redux';
 import { saveUserData, saveGoogleData } from './actionCreators';
 import Board from './Board';
 import Loading from './Loading';
-import firebase from './firebase';
 
 const Main = styled.div`
     padding: 25px 50px;
@@ -49,7 +48,7 @@ class AppIndex extends Component {
                 console.log('test', user.uid);
                 console.log('googleData', saveGoogleData(user));
                 const { saveUserData } = this.props;
-                const userDataRef = firebase.database().ref(`${user.uid}`);
+                const userDataRef = database.ref(`${user.uid}`);
                 userDataRef.on('value', snapshot => {
                     let userData = snapshot.val();
                     console.log(userData);

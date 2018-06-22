@@ -1,11 +1,10 @@
 import LogRocket from 'logrocket';
 import React, { Component } from 'react';
-import { auth, provider } from './firebase.js';
+import { auth, provider, database } from './firebase';
 import { connect } from 'react-redux';
 import { saveGoogleData } from './actionCreators';
 import styled from 'styled-components';
 import Logo from './Logo';
-import firebase from './firebase';
 
 const LoginPanel = styled.div`
     display: flex;
@@ -70,7 +69,7 @@ class Login extends Component {
                     name: user.displayName,
                     email: user.email
                 });
-                const userRef = firebase.database().ref(`${user.uid}/user`);
+                const userRef = database.ref(`${user.uid}/user`);
                 const userno = {
                     email: user.email
                 };
