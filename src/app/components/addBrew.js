@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { database } from './firebase';
+import { database, storage } from './firebase';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import FileUploader from 'react-firebase-file-uploader';
@@ -228,8 +228,7 @@ class AddBrew extends Component {
     handleUploadSuccess = filename => {
         const { googleData } = this.props;
         this.setState({ image: filename, isUploading: false });
-        firebase
-            .storage()
+        storage
             .ref('images/' + googleData.uid + '/' + this.state.beerName)
             .child(filename)
             .getDownloadURL()
@@ -431,9 +430,7 @@ class AddBrew extends Component {
                                     accept="image/*"
                                     name="beerLogo"
                                     randomizeFilename
-                                    storageRef={firebase
-                                        .storage()
-                                        .ref('images/' + googleData.uid + '/' + this.state.beerName)}
+                                    storageRef={storage.ref('images/' + googleData.uid + '/' + this.state.beerName)}
                                     onUploadStart={this.handleUploadStart}
                                     onUploadError={this.handleUploadError}
                                     onUploadSuccess={this.handleUploadSuccess}
