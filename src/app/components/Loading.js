@@ -18,8 +18,7 @@ class Loading extends React.Component {
             autoplay: true,
             animationData: loadingAnimation,
             rendererSettings: {
-                preserveAspectRatio: 'xMidYMid slice',
-                progressiveLoad: true
+                preserveAspectRatio: 'xMidYMid slice'
             }
         };
 
