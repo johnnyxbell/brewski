@@ -1,3 +1,4 @@
+import LogRocket from 'logrocket';
 import React, { Component } from 'react';
 import { auth, provider } from './firebase.js';
 import { connect } from 'react-redux';
@@ -65,6 +66,10 @@ class Login extends Component {
                 saveGoogleData(user);
                 console.log(saveGoogleData(user));
                 console.log('hello', user);
+                LogRocket.identify(user.uid, {
+                    name: user.displayName,
+                    email: user.email
+                });
                 const userRef = firebase.database().ref(`${user.uid}/user`);
                 const userno = {
                     email: user.email

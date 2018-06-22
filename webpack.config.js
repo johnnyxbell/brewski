@@ -3,7 +3,7 @@ const path = require('path');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const CompressionPlugin = require('compression-webpack-plugin');
+//const CompressionPlugin = require('compression-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const SystemBellPlugin = require('system-bell-webpack-plugin');
@@ -59,14 +59,14 @@ module.exports = function(env) {
             new CopyWebpackPlugin([
                 {from:'./template/_redirects'}
             ]),
-            new CompressionPlugin({
-                asset: '[path].gz[query]',
-                algorithm: 'gzip',
-                test: /\.js$|\.css$|\.html$/,
-                threshold: 0,
-                minRatio: 0.9,
-                deleteOriginalAssets: true
-            }),
+            // new CompressionPlugin({
+            //     asset: '[path].gz[query]',
+            //     algorithm: 'gzip',
+            //     test: /\.js$|\.css$|\.html$/,
+            //     threshold: 0,
+            //     minRatio: 0.9,
+            //     deleteOriginalAssets: true
+            // }),
             new HtmlWebpackPlugin({
                 inject: false,
                 template: './template/index.ejs',

@@ -75,7 +75,7 @@
 <% } %>
 
 <% for (key in htmlWebpackPlugin.files.chunks) { %>
-<script src="<%= htmlWebpackPlugin.files.chunks[key].entry %>.gz" type="text/javascript"></script>
+<script src="<%= htmlWebpackPlugin.files.chunks[key].entry %>" type="text/javascript"></script>
 <% } %>
 
 <% if (htmlWebpackPlugin.options.devServer) { %>

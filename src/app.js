@@ -1,3 +1,4 @@
+import LogRocket from 'logrocket';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'whatwg-fetch';
@@ -11,6 +12,9 @@ import Styles from './app/assets/scss/style.scss';
 //components
 import AppIndex from './app/components/appIndex';
 import Login from './app/components/Login';
+
+//LogRocket
+LogRocket.init('wq0pfj/brewski');
 
 ReactDOM.render(
     <BrowserRouter>
