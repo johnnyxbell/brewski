@@ -14,7 +14,9 @@ import AppIndex from './app/components/appIndex';
 import Login from './app/components/Login';
 
 //LogRocket
-LogRocket.init('wq0pfj/brewski');
+if (PRODUCTION) {
+    LogRocket.init('wq0pfj/brewski');
+}
 
 ReactDOM.render(
     <BrowserRouter>

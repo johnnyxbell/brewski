@@ -82,6 +82,9 @@ module.exports = function(env) {
                     path: 'build'
                 }
             }),
+            new webpack.DefinePlugin({
+                PRODUCTION: JSON.stringify(true)
+            }),
             new webpack.BannerPlugin({
                 banner:
                 `Version: ` +
@@ -127,7 +130,10 @@ module.exports = function(env) {
             new StyleLintPlugin({
                 files: './app/assets/scss/**/*.scss'
             }),
-            new FlowBabelWebpackPlugin()
+            new FlowBabelWebpackPlugin(),
+            new webpack.DefinePlugin({
+                PRODUCTION: JSON.stringify(false),
+            })
         );
     }
 
