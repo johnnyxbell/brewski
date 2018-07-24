@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
 import Header from './Header';
-import AddBrew from './addBrew';
-import AddLocation from './addLocation';
-import ManageBoards from './manageBoards';
-import KegHealth from './kegHealth';
-import MyAccount from './myAccount';
 import { Route, Switch } from 'react-router-dom';
 import styled, { injectGlobal } from 'styled-components';
 import { auth, database } from './firebase';
@@ -33,6 +28,31 @@ injectGlobal`
 `;
 const Home = Loadable({
     loader: () => import('./Home'),
+    loading: Loading
+});
+
+const AddBrew = Loadable({
+    loader: () => import('./addBrew'),
+    loading: Loading
+});
+
+const AddLocation = Loadable({
+    loader: () => import('./addLocation'),
+    loading: Loading
+});
+
+const ManageBoards = Loadable({
+    loader: () => import('./manageBoards'),
+    loading: Loading
+});
+
+const KegHealth = Loadable({
+    loader: () => import('./kegHealth'),
+    loading: Loading
+});
+
+const MyAccount = Loadable({
+    loader: () => import('./myAccount'),
     loading: Loading
 });
 
