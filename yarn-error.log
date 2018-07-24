@@ -76,6 +76,7 @@ npm manifest:
       "json-loader": "^0.5.4",
       "license-banner-webpack-plugin": "^0.0.4",
       "lodash": "^4.17.4",
+      "logrocket": "^0.6.16",
       "material-ui": "^0.20.1",
       "node-sass": "^4.9.0",
       "nodemon": "^1.11.0",
@@ -86,7 +87,7 @@ npm manifest:
       "react-addons-test-utils": "^15.4.2",
       "react-firebase-file-uploader": "^2.4.1",
       "react-hot-loader": "^3.0.0-beta.6",
-      "react-lottie": "^1.1.0",
+      "react-lottie": "^1.2.3",
       "react-redux": "^5.0.7",
       "react-router": "^4.2.0",
       "react-router-dom": "^4.2.2",
@@ -109,6 +110,7 @@ npm manifest:
       "@fortawesome/react-fontawesome": "^0.0.20",
       "react": "^16.3.2",
       "react-dom": "^16.3.2",
+      "react-loadable": "^5.4.0",
       "redux": "3.6.0",
       "whatwg-fetch": "^2.0.3"
     },
@@ -6157,6 +6159,10 @@ Lockfile:
       figures "^1.3.5"
       squeak "^1.0.0"
   
+  logrocket@^0.6.16:
+    version "0.6.16"
+    resolved "https://registry.yarnpkg.com/logrocket/-/logrocket-0.6.16.tgz#09ac05426b096016e19395a0c0b0acf97a647418"
+  
   long@~3:
     version "3.2.0"
     resolved "https://registry.yarnpkg.com/long/-/long-3.2.0.tgz#d821b7138ca1cb581c172990ef14db200b5c474b"
@@ -6172,8 +6178,8 @@ Lockfile:
       js-tokens "^3.0.0"
   
   lottie-web@^5.1.3:
-    version "5.1.15"
-    resolved "https://registry.yarnpkg.com/lottie-web/-/lottie-web-5.1.15.tgz#d52073a93238175e36038055abf651a966d71a11"
+    version "5.1.18"
+    resolved "https://registry.yarnpkg.com/lottie-web/-/lottie-web-5.1.18.tgz#e026619302caf83eee4edf72bb81add415da2604"
   
   loud-rejection@^1.0.0:
     version "1.6.0"
@@ -7866,6 +7872,13 @@ Lockfile:
     dependencies:
       read "1"
   
+  prop-types@^15.5.0:
+    version "15.6.2"
+    resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
+    dependencies:
+      loose-envify "^1.3.1"
+      object-assign "^4.1.1"
+  
   prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.6.0:
     version "15.6.0"
     resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.0.tgz#ceaf083022fc46b4a35f69e13ef75aed0d639856"
@@ -8110,9 +8123,15 @@ Lockfile:
       redbox-react "^1.3.6"
       source-map "^0.6.1"
   
-  react-lottie@^1.1.0:
-    version "1.1.0"
-    resolved "https://registry.yarnpkg.com/react-lottie/-/react-lottie-1.1.0.tgz#9d7ddd1d9df8fd0d1323c257b03ee317bbee6a63"
+  react-loadable@^5.4.0:
+    version "5.4.0"
+    resolved "https://registry.yarnpkg.com/react-loadable/-/react-loadable-5.4.0.tgz#3b6b7d51121a7868fd155be848a36e02084742c9"
+    dependencies:
+      prop-types "^15.5.0"
+  
+  react-lottie@^1.2.3:
+    version "1.2.3"
+    resolved "https://registry.yarnpkg.com/react-lottie/-/react-lottie-1.2.3.tgz#8544b96939e088658072eea5e12d912cdaa3acc1"
     dependencies:
       babel-runtime "^6.26.0"
       lottie-web "^5.1.3"

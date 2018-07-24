@@ -10,8 +10,9 @@ The ultimate bar menu screen. Update your beers online and have it automatically
 - ~~Add redux for the account data~~
 - ~~update beerList to userData~~
 - ~~Add feature to add and remove sizes, up to 3, minimum 1~~
-- Add form validation
+- ~~Close the user menu when you click away~~
 - ~~Add icons next to menu items~~
+- Add form validation
 - Display the panels with the images better
 - Work on add beer form to make it look nicer
 - Re order the beers on manage boards to update where they sit in the database
@@ -23,7 +24,6 @@ The ultimate bar menu screen. Update your beers online and have it automatically
 
 - Edit beer and save to firebase
 - Add locations
-- Close the user menu when you click away
 - Delete a image when you remove the beer
 - Dashboard / Home ?
 

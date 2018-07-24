@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from './Logo';
 import UserMenu from './userMenu';
@@ -39,9 +39,20 @@ const Menu = styled.div`
         font-family: 'roboto', sans-serif;
         align-items: center;
         display: flex;
+        transition: color 0.3s ease;
+        &:hover {
+            color: #ccc;
+            text-decoration: none;
+        }
     }
     svg {
         margin-right: 10px;
+    }
+    .active {
+        color: #f0bb48;
+        &:hover {
+            color: #f0bb48;
+        }
     }
 `;
 const User = styled.div`
@@ -76,8 +87,31 @@ class Header extends Component {
     constructor() {
         super();
         this.state = {
-            isHidden: true
+            isHidden: false
         };
+        this.handleClick = this.handleClick.bind(this);
+        this.handleOutsideClick = this.handleOutsideClick.bind(this);
+    }
+
+    handleClick() {
+        if (!this.state.isHidden) {
+            // attach/remove event handler
+            document.addEventListener('click', this.handleOutsideClick, false);
+        } else {
+            document.removeEventListener('click', this.handleOutsideClick, false);
+        }
+
+        this.setState(prevState => ({
+            isHidden: !prevState.isHidden
+        }));
+    }
+
+    handleOutsideClick(e) {
+        // ignore clicks on the component itself
+        if (this.node.contains(e.target)) {
+            return;
+        }
+        this.handleClick();
     }
 
     toggleHidden() {
@@ -97,49 +131,55 @@ class Header extends Component {
     }
 
     render() {
-        const { googleData, userData } = this.props;
-        console.log('header', userData);
+        const { googleData } = this.props;
         console.log('this.props', this.props);
         return (
             <div className="header">
                 <HeaderPanel>
                     <Menu>
-                        <Link to="/">{logo}</Link>
-                        <Link to="/">
+                        <NavLink to="/">{logo}</NavLink>
+                        <NavLink to="/" exact={true} activeClassName="active">
                             <span>
                                 <FontAwesomeIcon icon={faTachometerAlt} />
                             </span>
                             Dashboard
-                        </Link>
-                        <Link to="/add-brews">
+                        </NavLink>
+                        <NavLink to="/add-brews" activeClassName="active">
                             <span>
                                 <FontAwesomeIcon icon={faBeer} />
                             </span>
                             Add Brews
-                        </Link>
-                        <Link to="/add-locations">
+                        </NavLink>
+                        <NavLink to="/add-locations" activeClassName="active">
                             <span>
                                 <FontAwesomeIcon icon={faMapMarkerAlt} />
                             </span>
                             Add Locations
-                        </Link>
-                        <Link to="/manage-boards">
+                        </NavLink>
+                        <NavLink to="/manage-boards" activeClassName="active">
                             <span>
                                 <FontAwesomeIcon icon={faColumns} />
                             </span>
                             Manage Boards
-                        </Link>
+                        </NavLink>
                         {/*<Link to="/keg-health">Keg Heath</Link>*/}
                     </Menu>
-                    <User onClick={this.toggleHidden.bind(this)}>
-                        <img src={googleData.photoURL} />
-                        <span>{googleData.displayName}</span>
-                        <span>
-                            <FontAwesomeIcon icon={faSortDown} />
-                        </span>
-                    </User>
+                    <div
+                        ref={node => {
+                            this.node = node;
+                        }}
+                        onClick={this.handleClick}
+                    >
+                        <User>
+                            <img src={googleData.photoURL} />
+                            <span>{googleData.displayName}</span>
+                            <span>
+                                <FontAwesomeIcon icon={faSortDown} />
+                            </span>
+                        </User>
+                    </div>
                 </HeaderPanel>
-                {!this.state.isHidden && <UserMenu />}
+                {this.state.isHidden && <UserMenu />}
             </div>
         );
     }
@@ -153,4 +193,4 @@ const mapDispatchToProps = dispatch => ({
     saveGoogleData: data => dispatch(saveGoogleData(data))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
