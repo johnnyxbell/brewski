@@ -6,6 +6,8 @@ import UserMenu from './userMenu';
 import { connect } from 'react-redux';
 import { saveGoogleData } from './actionCreators';
 import { auth } from './firebase';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faSortDown from '@fortawesome/fontawesome-free-solid/faSortDown';
 
 const HeaderPanel = styled.div`
     position: relative;
@@ -37,6 +39,7 @@ const User = styled.div`
     margin-right: 25px;
     display: flex;
     align-items: center;
+    font-family: 'roboto', sans-serif;
     img {
         width: 40px;
         height: 40px;
@@ -48,6 +51,15 @@ const User = styled.div`
         color: white;
         text-decoration: none;
         margin-right: 25px;
+    }
+    span {
+        color: white;
+        margin-left: 15px;
+        cursor: pointer;
+    }
+    svg {
+        width: 10px !important;
+        margin-left: -25px;
     }
 `;
 
@@ -91,6 +103,10 @@ class Header extends Component {
                     </Menu>
                     <User onClick={this.toggleHidden.bind(this)}>
                         <img src={googleData.photoURL} />
+                        <span>{googleData.displayName}</span>
+                        <span>
+                            <FontAwesomeIcon icon={faSortDown} />
+                        </span>
                     </User>
                 </HeaderPanel>
                 {!this.state.isHidden && <UserMenu />}
