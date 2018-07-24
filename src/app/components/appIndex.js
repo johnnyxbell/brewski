@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Header from './Header';
-import Home from './Home';
 import AddBrew from './addBrew';
 import AddLocation from './addLocation';
 import ManageBoards from './manageBoards';
@@ -13,6 +12,7 @@ import { connect } from 'react-redux';
 import { saveUserData, saveGoogleData } from './actionCreators';
 import Board from './Board';
 import Loading from './Loading';
+import Loadable from 'react-loadable';
 
 const Main = styled.div`
     padding: 25px 50px;
@@ -31,6 +31,10 @@ injectGlobal`
   }
   }
 `;
+const Home = Loadable({
+    loader: () => import('./Home'),
+    loading: Loading
+});
 
 class AppIndex extends Component {
     constructor() {
