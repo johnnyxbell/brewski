@@ -16,6 +16,7 @@ import faSortDown from '@fortawesome/fontawesome-free-solid/faSortDown';
 const HeaderPanel = styled.div`
     position: relative;
     background: #34343a;
+    box-shadow: #7e7e84 1px 1px 7px;
     background-size: cover;
     width: 100vw;
     display: flex;

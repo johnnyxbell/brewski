@@ -79,6 +79,7 @@
     "redux-devtools-extension": "^2.13.2",
     "redux-thunk": "2.2.0",
     "sass-loader": "^6.0.3",
+    "simple-react-validator": "^0.0.8",
     "style-loader": "0.13.2",
     "styled-components": "^2.1.2",
     "stylelint-webpack-plugin": "^0.7.0",

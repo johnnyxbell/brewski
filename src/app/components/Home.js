@@ -19,7 +19,7 @@ class Home extends Component {
     loadTitle() {
         const { userData } = this.props;
         if (userData.beer) {
-            return <h2>Whats on Tap</h2>;
+            return <h2>Whats on Tap?</h2>;
         } else {
             return 'No beers on tap, Add a Beer';
         }
