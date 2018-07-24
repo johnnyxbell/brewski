@@ -11,7 +11,7 @@ The ultimate bar menu screen. Update your beers online and have it automatically
 - ~~update beerList to userData~~
 - ~~Add feature to add and remove sizes, up to 3, minimum 1~~
 - Add form validation
-- Add icons next to menu items
+- ~~Add icons next to menu items~~
 - Display the panels with the images better
 - Work on add beer form to make it look nicer
 - Re order the beers on manage boards to update where they sit in the database

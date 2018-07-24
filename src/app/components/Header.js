@@ -7,6 +7,10 @@ import { connect } from 'react-redux';
 import { saveGoogleData } from './actionCreators';
 import { auth } from './firebase';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faTachometerAlt from '@fortawesome/fontawesome-free-solid/faTachometerAlt';
+import faBeer from '@fortawesome/fontawesome-free-solid/faBeer';
+import faMapMarkerAlt from '@fortawesome/fontawesome-free-solid/faMapMarkerAlt';
+import faColumns from '@fortawesome/fontawesome-free-solid/faColumns';
 import faSortDown from '@fortawesome/fontawesome-free-solid/faSortDown';
 
 const HeaderPanel = styled.div`
@@ -31,8 +35,13 @@ const Menu = styled.div`
     a {
         color: #ffffff;
         text-decoration: none;
-        margin: 0 15px;
+        margin: 0 5px;
         font-family: 'roboto', sans-serif;
+        align-items: center;
+        display: flex;
+    }
+    svg {
+        margin-right: 10px;
     }
 `;
 const User = styled.div`
@@ -96,9 +105,30 @@ class Header extends Component {
                 <HeaderPanel>
                     <Menu>
                         <Link to="/">{logo}</Link>
-                        <Link to="/add-brews">Add Brews</Link>
-                        <Link to="/add-locations">Add Locations</Link>
-                        <Link to="/manage-boards">Manage Boards</Link>
+                        <Link to="/">
+                            <span>
+                                <FontAwesomeIcon icon={faTachometerAlt} />
+                            </span>
+                            Dashboard
+                        </Link>
+                        <Link to="/add-brews">
+                            <span>
+                                <FontAwesomeIcon icon={faBeer} />
+                            </span>
+                            Add Brews
+                        </Link>
+                        <Link to="/add-locations">
+                            <span>
+                                <FontAwesomeIcon icon={faMapMarkerAlt} />
+                            </span>
+                            Add Locations
+                        </Link>
+                        <Link to="/manage-boards">
+                            <span>
+                                <FontAwesomeIcon icon={faColumns} />
+                            </span>
+                            Manage Boards
+                        </Link>
                         {/*<Link to="/keg-health">Keg Heath</Link>*/}
                     </Menu>
                     <User onClick={this.toggleHidden.bind(this)}>

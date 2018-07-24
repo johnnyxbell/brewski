@@ -39,7 +39,7 @@ class Home extends Component {
         const { googleData } = this.props;
         return (
             <div>
-                <h1>Home</h1>
+                <h1>Dashboard</h1>
                 <p>{`Welcome back ${googleData.displayName}.`}</p>
                 {this.loadTitle()}
                 {this.loadBeers()}
