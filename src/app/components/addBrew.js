@@ -9,6 +9,7 @@ import faCloudUpload from '@fortawesome/fontawesome-free-solid/faCloudUploadAlt'
 import faCheckCircle from '@fortawesome/fontawesome-free-solid/faCheckCircle';
 import faPlus from '@fortawesome/fontawesome-free-solid/faPlus';
 import faMinus from '@fortawesome/fontawesome-free-solid/faMinus';
+import { Link } from 'react-router-dom';
 
 const AddBrewWrapper = styled.div`
     box-shadow: 0 1px 17px 0 rgba(0, 0, 0, 0.07);
@@ -173,12 +174,14 @@ class AddBrew extends Component {
             imageURL: '',
             isUploading: false,
             progress: 0,
+            locationValue: '',
             sizeInput: [],
             priceInput: []
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.appendInput = this.appendInput.bind(this);
+        this.onLocationFilter = this.onLocationFilter.bind(this);
     }
 
     appendInput() {
@@ -238,7 +241,7 @@ class AddBrew extends Component {
     handleSubmit(e) {
         e.preventDefault();
         const { googleData } = this.props;
-        const beerRef = database.ref(`${googleData.uid}/beer`);
+        const beerRef = database.ref(`${googleData.uid}/location/${this.state.locationValue}/beer`);
         const beer = {
             beerName: this.state.beerName,
             beerType: this.state.beerType,
@@ -248,7 +251,8 @@ class AddBrew extends Component {
             size2: this.state.size2,
             price: this.state.price,
             price2: this.state.price2,
-            image: this.state.imageURL
+            image: this.state.imageURL,
+            locationValue: this.state.locationValue
         };
         beerRef.push(beer);
         this.setState({
@@ -262,6 +266,7 @@ class AddBrew extends Component {
             price2: '',
             image: '',
             imageURL: '',
+            locationValue: this.state.locationValue,
             sizeInput: [],
             priceInput: []
         });
@@ -272,35 +277,63 @@ class AddBrew extends Component {
 
     removeItem(beerId) {
         const { googleData } = this.props;
-        const beerRef = database.ref(`${googleData.uid}/beer/${beerId}`);
+        const beerRef = database.ref(`${googleData.uid}/location${this.state.locationValue}/beer/${beerId}`);
         beerRef.remove();
+    }
+
+    loadLocationsTitle() {
+        const { userData } = this.props;
+        if (userData.location) {
+            return <h1>Select Location</h1>;
+        } else {
+            return '';
+        }
+    }
+
+    onLocationFilter(e) {
+        console.log('changing location');
+        this.setState({
+            locationValue: e.target.value
+        });
+    }
+
+    loadLocations() {
+        const { userData } = this.props;
+        if (userData.location) {
+            return Object.keys(userData.location).map(item => (
+                <option key={item} value={item}>
+                    {userData.location[item].locationName} - {userData.location[item].locationAddress}
+                </option>
+            ));
+        } else {
+            return (
+                <div>
+                    <h1>Add Brewskis</h1>
+                    Hey there, seems like you have no locations setup, please add one before adding a brewski.
+                    <Link to="/add-locations">
+                        <button>Add Location</button>
+                    </Link>
+                </div>
+            );
+        }
     }
 
     loadBeers() {
         const { userData } = this.props;
-        console.log('hi', userData.beer);
-        if (userData.beer) {
-            return Object.keys(userData.beer).map(item => (
-                <BeerItem key={item}>
-                    <h3>{userData.beer[item].beerName}</h3>
-                    {userData.beer[item].image ? <img src={userData.beer[item].image} /> : ''}
-                    <p>
-                        {userData.beer[item].beerType}, ABV - {userData.beer[item].ABV}
-                    </p>
-                    <p>{userData.beer[item].country}</p>
-                    <p>
-                        {userData.beer[item].size}, {userData.beer[item].price}
-                    </p>
-                    <p>
-                        {userData.beer[item].size2 ? `${userData.beer[item].size2},  ` : ''}
-                        {userData.beer[item].price2 ? userData.beer[item].price2 : ''}
-                    </p>
-                    <button onClick={() => this.removeItem(item)}>Remove Brewski</button>
-                </BeerItem>
-            ));
+        let matrix;
+        if (userData.location) {
+            matrix = Object.keys(userData.location).map(locationitem => {
+                return Object.keys(userData.location[locationitem].beer).map(beerItem => {
+                    return (
+                        <BeerItem key={beerItem}>{userData.location[locationitem].beer[beerItem].beerName}</BeerItem>
+                    );
+                });
+            });
         } else {
-            return '';
+            console.log('hi');
         }
+
+        console.log(matrix);
     }
 
     loadTitle() {
@@ -321,138 +354,152 @@ class AddBrew extends Component {
         );
     }
 
+    addBrewskis() {
+        const { googleData, userData } = this.props;
+        if (!userData.location) {
+            return '';
+        } else {
+            return (
+                <div>
+                    <h1>Add Brewskis</h1>
+                    <AddBrewWrapper>
+                        <form onSubmit={this.handleSubmit}>
+                            <AddBrewForm>
+                                <label>
+                                    Name of beer
+                                    <input
+                                        type="text"
+                                        name="beerName"
+                                        placeholder="Lagunitas, Fat Yak, etc"
+                                        onChange={this.handleChange}
+                                        value={this.state.beerName}
+                                    />
+                                </label>
+
+                                <label>
+                                    Type
+                                    <input
+                                        type="text"
+                                        name="beerType"
+                                        placeholder="Stout, Larger, IPA, etc."
+                                        onChange={this.handleChange}
+                                        value={this.state.beerType}
+                                    />
+                                </label>
+                                <label>
+                                    ABV
+                                    <input
+                                        type="text"
+                                        name="ABV"
+                                        placeholder="5.6%"
+                                        onChange={this.handleChange}
+                                        value={this.state.ABV}
+                                    />
+                                </label>
+                                <label>
+                                    Origin
+                                    <input
+                                        type="text"
+                                        name="country"
+                                        placeholder="Brooklyn, New York"
+                                        onChange={this.handleChange}
+                                        value={this.state.country}
+                                    />
+                                </label>
+                                <label>
+                                    Size
+                                    <input
+                                        type="text"
+                                        name="size"
+                                        placeholder="10oz, 14oz, etc"
+                                        onChange={this.handleChange}
+                                        value={this.state.size}
+                                    />
+                                </label>
+                                <label>
+                                    Price
+                                    <input
+                                        type="text"
+                                        name="price"
+                                        placeholder="$5"
+                                        onChange={this.handleChange}
+                                        value={this.state.price}
+                                    />
+                                </label>
+                                {this.state.sizeInput.map(sizeInput => (
+                                    <label key={sizeInput}>
+                                        Size
+                                        <input
+                                            key={sizeInput}
+                                            type="text"
+                                            name={sizeInput}
+                                            placeholder="10oz, 14oz"
+                                            onChange={this.handleChange}
+                                            value={this.state.size2}
+                                        />
+                                    </label>
+                                ))}
+                                {this.state.priceInput.map(priceInput => (
+                                    <label key={priceInput}>
+                                        Price
+                                        <input
+                                            key={priceInput}
+                                            type="text"
+                                            name={priceInput}
+                                            placeholder="$5"
+                                            onChange={this.handleChange}
+                                            value={this.state.price2}
+                                        />
+                                    </label>
+                                ))}
+                            </AddBrewForm>
+                            {this.displayAddANother()}
+                            <UploadImageWrapper>
+                                <label>Upload Image</label>
+                                <UploadImage>
+                                    {!this.state.image && !this.state.isUploading && this.imageUpload()}
+                                    {this.state.isUploading && <SmallLoading />}
+                                    {this.state.imageURL && <FontAwesomeIcon color="green" icon={faCheckCircle} />}
+                                    <FileUploader
+                                        hidden
+                                        accept="image/*"
+                                        name="beerLogo"
+                                        randomizeFilename
+                                        storageRef={storage.ref('images/' + googleData.uid + '/' + this.state.beerName)}
+                                        onUploadStart={this.handleUploadStart}
+                                        onUploadError={this.handleUploadError}
+                                        onUploadSuccess={this.handleUploadSuccess}
+                                        onProgress={this.handleProgress}
+                                        maxHeight={300}
+                                        maxWidth={300}
+                                    />
+                                </UploadImage>
+                                <ImageWrapper>
+                                    {this.state.imageURL && <Close onClick={() => this.handleRemoveImage()}>X</Close>}
+                                    {this.state.imageURL && <img src={this.state.imageURL} />}
+                                </ImageWrapper>
+                            </UploadImageWrapper>
+                            <button>Add Brewski 🍻</button>
+                        </form>
+                    </AddBrewWrapper>
+                    <div>
+                        <DisplayBeers>
+                            {this.loadTitle()}
+                            <BeerItemWrapper>{this.loadBeers()}</BeerItemWrapper>
+                        </DisplayBeers>
+                    </div>
+                </div>
+            );
+        }
+    }
+
     render() {
-        const { googleData } = this.props;
         console.log('state in addbrew', this.state);
         return (
             <div>
-                <h1>Add Brewskis</h1>
-                <AddBrewWrapper>
-                    <form onSubmit={this.handleSubmit}>
-                        <AddBrewForm>
-                            <label>
-                                Name of beer
-                                <input
-                                    type="text"
-                                    name="beerName"
-                                    placeholder="Lagunitas, Fat Yak, etc"
-                                    onChange={this.handleChange}
-                                    value={this.state.beerName}
-                                />
-                            </label>
-
-                            <label>
-                                Type
-                                <input
-                                    type="text"
-                                    name="beerType"
-                                    placeholder="Stout, Larger, IPA, etc."
-                                    onChange={this.handleChange}
-                                    value={this.state.beerType}
-                                />
-                            </label>
-                            <label>
-                                ABV
-                                <input
-                                    type="text"
-                                    name="ABV"
-                                    placeholder="5.6%"
-                                    onChange={this.handleChange}
-                                    value={this.state.ABV}
-                                />
-                            </label>
-                            <label>
-                                Origin
-                                <input
-                                    type="text"
-                                    name="country"
-                                    placeholder="Brooklyn, New York"
-                                    onChange={this.handleChange}
-                                    value={this.state.country}
-                                />
-                            </label>
-                            <label>
-                                Size
-                                <input
-                                    type="text"
-                                    name="size"
-                                    placeholder="10oz, 14oz, etc"
-                                    onChange={this.handleChange}
-                                    value={this.state.size}
-                                />
-                            </label>
-                            <label>
-                                Price
-                                <input
-                                    type="text"
-                                    name="price"
-                                    placeholder="$5"
-                                    onChange={this.handleChange}
-                                    value={this.state.price}
-                                />
-                            </label>
-                            {this.state.sizeInput.map(sizeInput => (
-                                <label key={sizeInput}>
-                                    Size
-                                    <input
-                                        key={sizeInput}
-                                        type="text"
-                                        name={sizeInput}
-                                        placeholder="10oz, 14oz"
-                                        onChange={this.handleChange}
-                                        value={this.state.size2}
-                                    />
-                                </label>
-                            ))}
-                            {this.state.priceInput.map(priceInput => (
-                                <label key={priceInput}>
-                                    Price
-                                    <input
-                                        key={priceInput}
-                                        type="text"
-                                        name={priceInput}
-                                        placeholder="$5"
-                                        onChange={this.handleChange}
-                                        value={this.state.price2}
-                                    />
-                                </label>
-                            ))}
-                        </AddBrewForm>
-                        {this.displayAddANother()}
-                        <UploadImageWrapper>
-                            <label>Upload Image</label>
-                            <UploadImage>
-                                {!this.state.image && !this.state.isUploading && this.imageUpload()}
-                                {this.state.isUploading && <SmallLoading />}
-                                {this.state.imageURL && <FontAwesomeIcon color="green" icon={faCheckCircle} />}
-                                <FileUploader
-                                    hidden
-                                    accept="image/*"
-                                    name="beerLogo"
-                                    randomizeFilename
-                                    storageRef={storage.ref('images/' + googleData.uid + '/' + this.state.beerName)}
-                                    onUploadStart={this.handleUploadStart}
-                                    onUploadError={this.handleUploadError}
-                                    onUploadSuccess={this.handleUploadSuccess}
-                                    onProgress={this.handleProgress}
-                                    maxHeight={300}
-                                    maxWidth={300}
-                                />
-                            </UploadImage>
-                            <ImageWrapper>
-                                {this.state.imageURL && <Close onClick={() => this.handleRemoveImage()}>X</Close>}
-                                {this.state.imageURL && <img src={this.state.imageURL} />}
-                            </ImageWrapper>
-                        </UploadImageWrapper>
-                        <button>Add Brewski 🍻</button>
-                    </form>
-                </AddBrewWrapper>
-                <div>
-                    <DisplayBeers>
-                        {this.loadTitle()}
-                        <BeerItemWrapper>{this.loadBeers()}</BeerItemWrapper>
-                    </DisplayBeers>
-                </div>
+                {this.loadLocationsTitle()}
+                <select onChange={this.onLocationFilter}>{this.loadLocations()}</select>
+                {this.addBrewskis()}
             </div>
         );
     }

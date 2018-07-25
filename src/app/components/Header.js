@@ -145,17 +145,17 @@ class Header extends Component {
                             </span>
                             Dashboard
                         </NavLink>
-                        <NavLink to="/add-brews" activeClassName="active">
-                            <span>
-                                <FontAwesomeIcon icon={faBeer} />
-                            </span>
-                            Add Brews
-                        </NavLink>
                         <NavLink to="/add-locations" activeClassName="active">
                             <span>
                                 <FontAwesomeIcon icon={faMapMarkerAlt} />
                             </span>
                             Add Locations
+                        </NavLink>
+                        <NavLink to="/add-brews" activeClassName="active">
+                            <span>
+                                <FontAwesomeIcon icon={faBeer} />
+                            </span>
+                            Add Brews
                         </NavLink>
                         <NavLink to="/manage-boards" activeClassName="active">
                             <span>
@@ -163,7 +163,6 @@ class Header extends Component {
                             </span>
                             Manage Boards
                         </NavLink>
-                        {/*<Link to="/keg-health">Keg Heath</Link>*/}
                     </Menu>
                     <div
                         ref={node => {
