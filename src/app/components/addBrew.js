@@ -240,6 +240,7 @@ class AddBrew extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        const { locationValue } = this.state;
         const { googleData } = this.props;
         const beerRef = database.ref(`${googleData.uid}/location/${this.state.locationValue}/beer`);
         const beer = {
@@ -251,10 +252,16 @@ class AddBrew extends Component {
             size2: this.state.size2,
             price: this.state.price,
             price2: this.state.price2,
-            image: this.state.imageURL,
-            locationValue: this.state.locationValue
+            image: this.state.imageURL
         };
         beerRef.push(beer);
+
+        const locationRef = database.ref(`${googleData.uid}/location/${locationValue}`);
+        // const location = {
+        //     locationValue
+        // };
+        locationRef.update({ locationValue });
+
         this.setState({
             beerName: '',
             beerType: '',
@@ -336,7 +343,7 @@ class AddBrew extends Component {
 
     loadBeers() {
         const { userData } = this.props;
-        console.log('hi', userData.location[this.state.locationValue]);
+        //console.log('hi', userData.location[this.state.locationValue]);
         if (!userData.location[this.state.locationValue]) {
             return '';
         } else {
@@ -533,9 +540,9 @@ class AddBrew extends Component {
     }
 
     render() {
-        console.log('state in addbrew', this.state);
-        const { userData } = this.props;
-        console.log('USER DATA', userData);
+        //console.log('state in addbrew', this.state);
+        //const { userData } = this.props;
+        //console.log('USER DATA', userData);
         return (
             <div>
                 {this.loadLocationsTitle()}

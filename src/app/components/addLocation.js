@@ -30,7 +30,8 @@ class AddLocations extends Component {
         const locationRef = database.ref(`${googleData.uid}/location`);
         const location = {
             locationName: this.state.locationName,
-            locationAddress: this.state.locationAddress
+            locationAddress: this.state.locationAddress,
+            locationValue: ''
         };
         locationRef.push(location);
         this.setState({

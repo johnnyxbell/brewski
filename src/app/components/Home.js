@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 class Home extends Component {
     loadBeers() {
         const { userData } = this.props;
-        console.log('hi', userData);
-        if (userData.beer) {
-            return Object.keys(userData.beer).map(item => (
+        if (userData.location) {
+            return Object.keys(userData.location).map(item => (
                 <div key={item}>
-                    <h3>{userData.beer[item].beerName}</h3>
+                    <h3>{userData.location[item].locationName}</h3>
+                    <p>{userData.location[item].locationAddress}</p>
                 </div>
             ));
         } else {
@@ -18,8 +18,8 @@ class Home extends Component {
 
     loadTitle() {
         const { userData } = this.props;
-        if (userData.beer) {
-            return <h2>Whats on Tap?</h2>;
+        if (userData.location) {
+            return <h2>Whats on Tap? & Where?</h2>;
         } else {
             return 'No beers on tap, Add a Beer';
         }
