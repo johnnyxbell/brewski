@@ -277,7 +277,7 @@ class AddBrew extends Component {
 
     removeItem(beerId) {
         const { googleData } = this.props;
-        const beerRef = database.ref(`${googleData.uid}/location${this.state.locationValue}/beer/${beerId}`);
+        const beerRef = database.ref(`${googleData.uid}/location/${this.state.locationValue}/beer/${beerId}`);
         beerRef.remove();
     }
 
@@ -297,14 +297,30 @@ class AddBrew extends Component {
         });
     }
 
+    componentDidMount() {
+        const { userData } = this.props;
+        if (!userData.location) {
+            return '';
+        } else {
+            console.log('TEST TEST TEST', userData.location[Object.keys(userData.location)[0]]);
+            this.setState({
+                locationValue: userData.location[Object.keys(userData.location)[0]]
+            });
+        }
+    }
+
     loadLocations() {
         const { userData } = this.props;
+        let options = [<option key={1}>Please Select...</option>];
         if (userData.location) {
-            return Object.keys(userData.location).map(item => (
-                <option key={item} value={item}>
-                    {userData.location[item].locationName} - {userData.location[item].locationAddress}
-                </option>
-            ));
+            Object.keys(userData.location).map(item =>
+                options.push(
+                    <option key={item} value={item}>
+                        {userData.location[item].locationName} - {userData.location[item].locationAddress}
+                    </option>
+                )
+            );
+            return <select onChange={this.onLocationFilter}>{options}</select>;
         } else {
             return (
                 <div>
@@ -320,20 +336,43 @@ class AddBrew extends Component {
 
     loadBeers() {
         const { userData } = this.props;
-        let matrix;
-        if (userData.location) {
-            matrix = Object.keys(userData.location).map(locationitem => {
-                return Object.keys(userData.location[locationitem].beer).map(beerItem => {
-                    return (
-                        <BeerItem key={beerItem}>{userData.location[locationitem].beer[beerItem].beerName}</BeerItem>
-                    );
-                });
-            });
+        console.log('hi', userData.location[this.state.locationValue]);
+        if (!userData.location[this.state.locationValue]) {
+            return '';
         } else {
-            console.log('hi');
+            if (!userData.location[this.state.locationValue].beer) {
+                return 'Please add a Beer';
+            } else {
+                return Object.keys(userData.location[this.state.locationValue].beer).map(item => (
+                    <BeerItem key={item}>
+                        <h3>{userData.location[this.state.locationValue].beer[item].beerName}</h3>
+                        {userData.location[this.state.locationValue].beer[item].image ? (
+                            <img src={userData.location[this.state.locationValue].beer[item].image} />
+                        ) : (
+                            ''
+                        )}
+                        <p>
+                            {userData.location[this.state.locationValue].beer[item].beerType}, ABV -{' '}
+                            {userData.location[this.state.locationValue].beer[item].ABV}
+                        </p>
+                        <p>{userData.location[this.state.locationValue].beer[item].country}</p>
+                        <p>
+                            {userData.location[this.state.locationValue].beer[item].size},{' '}
+                            {userData.location[this.state.locationValue].beer[item].price}
+                        </p>
+                        <p>
+                            {userData.location[this.state.locationValue].beer[item].size2
+                                ? `${userData.location[this.state.locationValue].beer[item].size2},  `
+                                : ''}
+                            {userData.location[this.state.locationValue].beer[item].price2
+                                ? userData.location[this.state.locationValue].beer[item].price2
+                                : ''}
+                        </p>
+                        <button onClick={() => this.removeItem(item)}>Remove Brewski</button>
+                    </BeerItem>
+                ));
+            }
         }
-
-        console.log(matrix);
     }
 
     loadTitle() {
@@ -495,10 +534,12 @@ class AddBrew extends Component {
 
     render() {
         console.log('state in addbrew', this.state);
+        const { userData } = this.props;
+        console.log('USER DATA', userData);
         return (
             <div>
                 {this.loadLocationsTitle()}
-                <select onChange={this.onLocationFilter}>{this.loadLocations()}</select>
+                {this.loadLocations()}
                 {this.addBrewskis()}
             </div>
         );
