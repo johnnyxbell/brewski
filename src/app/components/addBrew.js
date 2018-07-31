@@ -9,7 +9,7 @@ import faCloudUpload from '@fortawesome/fontawesome-free-solid/faCloudUploadAlt'
 import faCheckCircle from '@fortawesome/fontawesome-free-solid/faCheckCircle';
 import faPlus from '@fortawesome/fontawesome-free-solid/faPlus';
 import faMinus from '@fortawesome/fontawesome-free-solid/faMinus';
-import { Link } from 'react-router-dom';
+import SelectLocationPanel from './panels/SelectLocationPanel';
 
 const AddBrewWrapper = styled.div`
     box-shadow: 0 1px 17px 0 rgba(0, 0, 0, 0.07);
@@ -174,14 +174,12 @@ class AddBrew extends Component {
             imageURL: '',
             isUploading: false,
             progress: 0,
-            locationValue: '',
             sizeInput: [],
             priceInput: []
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.appendInput = this.appendInput.bind(this);
-        this.onLocationFilter = this.onLocationFilter.bind(this);
     }
 
     appendInput() {
@@ -240,9 +238,8 @@ class AddBrew extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        const { locationValue } = this.state;
-        const { googleData } = this.props;
-        const beerRef = database.ref(`${googleData.uid}/location/${this.state.locationValue}/beer`);
+        const { googleData, activeLocation } = this.props;
+        const beerRef = database.ref(`${googleData.uid}/location/${ActiveLocation}/beer`);
         const beer = {
             beerName: this.state.beerName,
             beerType: this.state.beerType,
@@ -256,11 +253,11 @@ class AddBrew extends Component {
         };
         beerRef.push(beer);
 
-        const locationRef = database.ref(`${googleData.uid}/location/${locationValue}`);
+        const locationRef = database.ref(`${googleData.uid}/location/${activeLocation.activeLocation}`);
         // const location = {
         //     locationValue
         // };
-        locationRef.update({ locationValue });
+        locationRef.update({ activeLocation });
 
         this.setState({
             beerName: '',
@@ -273,7 +270,6 @@ class AddBrew extends Component {
             price2: '',
             image: '',
             imageURL: '',
-            locationValue: this.state.locationValue,
             sizeInput: [],
             priceInput: []
         });
@@ -283,96 +279,49 @@ class AddBrew extends Component {
     }
 
     removeItem(beerId) {
-        const { googleData } = this.props;
-        const beerRef = database.ref(`${googleData.uid}/location/${this.state.locationValue}/beer/${beerId}`);
+        const { googleData, activeLocation } = this.props;
+        const beerRef = database.ref(`${googleData.uid}/location/${activeLocation.activeLocation}/beer/${beerId}`);
         beerRef.remove();
     }
 
-    loadLocationsTitle() {
-        const { userData } = this.props;
-        if (userData.location) {
-            return <h1>Select Location</h1>;
-        } else {
-            return '';
-        }
-    }
-
-    onLocationFilter(e) {
-        console.log('changing location');
-        this.setState({
-            locationValue: e.target.value
-        });
-    }
-
-    componentDidMount() {
-        const { userData } = this.props;
-        if (!userData.location) {
-            return '';
-        } else {
-            console.log('TEST TEST TEST', userData.location[Object.keys(userData.location)[0]]);
-            this.setState({
-                locationValue: userData.location[Object.keys(userData.location)[0]]
-            });
-        }
-    }
-
-    loadLocations() {
-        const { userData } = this.props;
-        let options = [<option key={1}>Please Select...</option>];
-        if (userData.location) {
-            Object.keys(userData.location).map(item =>
-                options.push(
-                    <option key={item} value={item}>
-                        {userData.location[item].locationName} - {userData.location[item].locationAddress}
-                    </option>
-                )
-            );
-            return <select onChange={this.onLocationFilter}>{options}</select>;
-        } else {
-            return (
-                <div>
-                    <h1>Add Brewskis</h1>
-                    Hey there, seems like you have no locations setup, please add one before adding a brewski.
-                    <Link to="/add-locations">
-                        <button>Add Location</button>
-                    </Link>
-                </div>
-            );
-        }
+    componentWillReceiveProps() {
+        const { activeLocation } = this.props;
+        console.log('Active Location', activeLocation);
     }
 
     loadBeers() {
-        const { userData } = this.props;
+        const { userData, activeLocation } = this.props;
+        console.log('Active Location', activeLocation);
         //console.log('hi', userData.location[this.state.locationValue]);
-        if (!userData.location[this.state.locationValue]) {
+        if (!userData.location[activeLocation]) {
             return '';
         } else {
-            if (!userData.location[this.state.locationValue].beer) {
+            if (!userData.location[activeLocation.activeLocation].beer) {
                 return 'Please add a Beer';
             } else {
-                return Object.keys(userData.location[this.state.locationValue].beer).map(item => (
+                return Object.keys(userData.location[activeLocation.activeLocation].beer).map(item => (
                     <BeerItem key={item}>
-                        <h3>{userData.location[this.state.locationValue].beer[item].beerName}</h3>
-                        {userData.location[this.state.locationValue].beer[item].image ? (
-                            <img src={userData.location[this.state.locationValue].beer[item].image} />
+                        <h3>{userData.location[activeLocation.activeLocation].beer[item].beerName}</h3>
+                        {userData.location[activeLocation.activeLocation].beer[item].image ? (
+                            <img src={userData.location[activeLocation.activeLocation].beer[item].image} />
                         ) : (
                             ''
                         )}
                         <p>
-                            {userData.location[this.state.locationValue].beer[item].beerType}, ABV -{' '}
-                            {userData.location[this.state.locationValue].beer[item].ABV}
+                            {userData.location[activeLocation.activeLocation].beer[item].beerType}, ABV -{' '}
+                            {userData.location[activeLocation.activeLocation].beer[item].ABV}
                         </p>
-                        <p>{userData.location[this.state.locationValue].beer[item].country}</p>
+                        <p>{userData.location[activeLocation.activeLocation].beer[item].country}</p>
                         <p>
-                            {userData.location[this.state.locationValue].beer[item].size},{' '}
-                            {userData.location[this.state.locationValue].beer[item].price}
+                            {userData.location[activeLocation.activeLocation].beer[item].size},{' '}
+                            {userData.location[activeLocation.activeLocation].beer[item].price}
                         </p>
                         <p>
-                            {userData.location[this.state.locationValue].beer[item].size2
-                                ? `${userData.location[this.state.locationValue].beer[item].size2},  `
+                            {userData.location[activeLocation.activeLocation].beer[item].size2
+                                ? `${userData.location[activeLocation.activeLocation].beer[item].size2},  `
                                 : ''}
-                            {userData.location[this.state.locationValue].beer[item].price2
-                                ? userData.location[this.state.locationValue].beer[item].price2
+                            {userData.location[activeLocation.activeLocation].beer[item].price2
+                                ? userData.location[activeLocation.activeLocation].beer[item].price2
                                 : ''}
                         </p>
                         <button onClick={() => this.removeItem(item)}>Remove Brewski</button>
@@ -382,14 +331,14 @@ class AddBrew extends Component {
         }
     }
 
-    loadTitle() {
-        const { userData } = this.props;
-        if (userData.beer) {
-            return <h2>Beer List</h2>;
-        } else {
-            return '';
-        }
-    }
+    // loadTitle() {
+    //     const { userData } = this.props;
+    //     if (userData.location[this.state.locationValue].beer) {
+    //         return <h2>Beer List</h2>;
+    //     } else {
+    //         return '';
+    //     }
+    // }
 
     imageUpload() {
         return (
@@ -530,7 +479,7 @@ class AddBrew extends Component {
                     </AddBrewWrapper>
                     <div>
                         <DisplayBeers>
-                            {this.loadTitle()}
+                            {/*{this.loadTitle()}*/}
                             <BeerItemWrapper>{this.loadBeers()}</BeerItemWrapper>
                         </DisplayBeers>
                     </div>
@@ -545,8 +494,7 @@ class AddBrew extends Component {
         //console.log('USER DATA', userData);
         return (
             <div>
-                {this.loadLocationsTitle()}
-                {this.loadLocations()}
+                <SelectLocationPanel />
                 {this.addBrewskis()}
             </div>
         );
@@ -555,7 +503,8 @@ class AddBrew extends Component {
 
 const mapStateToProps = state => ({
     googleData: state.googleData,
-    userData: state.userData
+    userData: state.userData,
+    activeLocation: state.activeLocation
 });
 
 export default connect(mapStateToProps)(AddBrew);
