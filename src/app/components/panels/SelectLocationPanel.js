@@ -47,6 +47,7 @@ class SelectLocationPanel extends Component {
     }
 
     onLocationFilter(e) {
+        const { saveActiveLocation } = this.props;
         console.log('changing location');
         saveActiveLocation(e.target.value);
         console.log('ActiveLocation', saveActiveLocation(e.target.value));

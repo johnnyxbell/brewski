@@ -239,7 +239,8 @@ class AddBrew extends Component {
     handleSubmit(e) {
         e.preventDefault();
         const { googleData, activeLocation } = this.props;
-        const beerRef = database.ref(`${googleData.uid}/location/${ActiveLocation}/beer`);
+        console.log('test', activeLocation);
+        const beerRef = database.ref(`${googleData.uid}/location/${activeLocation}/beer`);
         const beer = {
             beerName: this.state.beerName,
             beerType: this.state.beerType,
@@ -252,12 +253,6 @@ class AddBrew extends Component {
             image: this.state.imageURL
         };
         beerRef.push(beer);
-
-        const locationRef = database.ref(`${googleData.uid}/location/${activeLocation.activeLocation}`);
-        // const location = {
-        //     locationValue
-        // };
-        locationRef.update({ activeLocation });
 
         this.setState({
             beerName: '',
@@ -280,48 +275,42 @@ class AddBrew extends Component {
 
     removeItem(beerId) {
         const { googleData, activeLocation } = this.props;
-        const beerRef = database.ref(`${googleData.uid}/location/${activeLocation.activeLocation}/beer/${beerId}`);
+        const beerRef = database.ref(`${googleData.uid}/location/${activeLocation}/beer/${beerId}`);
         beerRef.remove();
-    }
-
-    componentWillReceiveProps() {
-        const { activeLocation } = this.props;
-        console.log('Active Location', activeLocation);
     }
 
     loadBeers() {
         const { userData, activeLocation } = this.props;
         console.log('Active Location', activeLocation);
-        //console.log('hi', userData.location[this.state.locationValue]);
         if (!userData.location[activeLocation]) {
             return '';
         } else {
-            if (!userData.location[activeLocation.activeLocation].beer) {
+            if (!userData.location[activeLocation].beer) {
                 return 'Please add a Beer';
             } else {
-                return Object.keys(userData.location[activeLocation.activeLocation].beer).map(item => (
+                return Object.keys(userData.location[activeLocation].beer).map(item => (
                     <BeerItem key={item}>
-                        <h3>{userData.location[activeLocation.activeLocation].beer[item].beerName}</h3>
-                        {userData.location[activeLocation.activeLocation].beer[item].image ? (
-                            <img src={userData.location[activeLocation.activeLocation].beer[item].image} />
+                        <h3>{userData.location[activeLocation].beer[item].beerName}</h3>
+                        {userData.location[activeLocation].beer[item].image ? (
+                            <img src={userData.location[activeLocation].beer[item].image} />
                         ) : (
                             ''
                         )}
                         <p>
-                            {userData.location[activeLocation.activeLocation].beer[item].beerType}, ABV -{' '}
-                            {userData.location[activeLocation.activeLocation].beer[item].ABV}
+                            {userData.location[activeLocation].beer[item].beerType}, ABV -{' '}
+                            {userData.location[activeLocation].beer[item].ABV}
                         </p>
-                        <p>{userData.location[activeLocation.activeLocation].beer[item].country}</p>
+                        <p>{userData.location[activeLocation].beer[item].country}</p>
                         <p>
-                            {userData.location[activeLocation.activeLocation].beer[item].size},{' '}
-                            {userData.location[activeLocation.activeLocation].beer[item].price}
+                            {userData.location[activeLocation].beer[item].size},{' '}
+                            {userData.location[activeLocation].beer[item].price}
                         </p>
                         <p>
-                            {userData.location[activeLocation.activeLocation].beer[item].size2
-                                ? `${userData.location[activeLocation.activeLocation].beer[item].size2},  `
+                            {userData.location[activeLocation].beer[item].size2
+                                ? `${userData.location[activeLocation].beer[item].size2},  `
                                 : ''}
-                            {userData.location[activeLocation.activeLocation].beer[item].price2
-                                ? userData.location[activeLocation.activeLocation].beer[item].price2
+                            {userData.location[activeLocation].beer[item].price2
+                                ? userData.location[activeLocation].beer[item].price2
                                 : ''}
                         </p>
                         <button onClick={() => this.removeItem(item)}>Remove Brewski</button>
@@ -490,10 +479,11 @@ class AddBrew extends Component {
 
     render() {
         //console.log('state in addbrew', this.state);
-        //const { userData } = this.props;
+        const { activeLocation } = this.props;
         //console.log('USER DATA', userData);
         return (
             <div>
+                <p>{activeLocation}</p>
                 <SelectLocationPanel />
                 {this.addBrewskis()}
             </div>
