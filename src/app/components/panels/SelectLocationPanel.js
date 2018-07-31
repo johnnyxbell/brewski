@@ -22,7 +22,7 @@ class SelectLocationPanel extends Component {
     }
 
     loadLocations() {
-        const { userData } = this.props;
+        const { userData, activeLocation } = this.props;
         let options = [<option key={1}>Please Select...</option>];
         if (userData.location) {
             Object.keys(userData.location).map(item =>
@@ -32,7 +32,11 @@ class SelectLocationPanel extends Component {
                     </option>
                 )
             );
-            return <select onChange={this.onLocationFilter}>{options}</select>;
+            return (
+                <select value={activeLocation} onChange={this.onLocationFilter}>
+                    {options}
+                </select>
+            );
         } else {
             return (
                 <div>

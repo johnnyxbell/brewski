@@ -478,12 +478,8 @@ class AddBrew extends Component {
     }
 
     render() {
-        //console.log('state in addbrew', this.state);
-        const { activeLocation } = this.props;
-        //console.log('USER DATA', userData);
         return (
             <div>
-                <p>{activeLocation}</p>
                 <SelectLocationPanel />
                 {this.addBrewskis()}
             </div>
