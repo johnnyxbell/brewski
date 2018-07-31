@@ -283,10 +283,10 @@ class AddBrew extends Component {
         const { userData, activeLocation } = this.props;
         console.log('Active Location', activeLocation);
         if (!userData.location[activeLocation]) {
-            return '';
+            return <h2>Please select a Location</h2>;
         } else {
             if (!userData.location[activeLocation].beer) {
-                return 'Please add a Beer';
+                return <h2>Yo, there is no beers for this location, add one above.</h2>;
             } else {
                 return Object.keys(userData.location[activeLocation].beer).map(item => (
                     <BeerItem key={item}>
@@ -320,14 +320,14 @@ class AddBrew extends Component {
         }
     }
 
-    // loadTitle() {
-    //     const { userData } = this.props;
-    //     if (userData.location[this.state.locationValue].beer) {
-    //         return <h2>Beer List</h2>;
-    //     } else {
-    //         return '';
-    //     }
-    // }
+    loadTitle() {
+        const { userData, activeLocation } = this.props;
+        if (activeLocation && userData.location[activeLocation].beer) {
+            return <h2>Beer List</h2>;
+        } else {
+            return '';
+        }
+    }
 
     imageUpload() {
         return (
@@ -468,7 +468,7 @@ class AddBrew extends Component {
                     </AddBrewWrapper>
                     <div>
                         <DisplayBeers>
-                            {/*{this.loadTitle()}*/}
+                            {this.loadTitle()}
                             <BeerItemWrapper>{this.loadBeers()}</BeerItemWrapper>
                         </DisplayBeers>
                     </div>

@@ -23,7 +23,11 @@ class SelectLocationPanel extends Component {
 
     loadLocations() {
         const { userData, activeLocation } = this.props;
-        let options = [<option key={1}>Please Select...</option>];
+        let options = [
+            <option value="novalue" key={1}>
+                Please Select...
+            </option>
+        ];
         if (userData.location) {
             Object.keys(userData.location).map(item =>
                 options.push(
