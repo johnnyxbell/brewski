@@ -345,7 +345,6 @@ class AddBrew extends Component {
         } else {
             return (
                 <div>
-                    <h1>Add Brewskis</h1>
                     <AddBrewWrapper>
                         <form onSubmit={this.handleSubmit}>
                             <AddBrewForm>
@@ -480,6 +479,7 @@ class AddBrew extends Component {
     render() {
         return (
             <div>
+                <h1>Add Brewskis</h1>
                 <SelectLocationPanel />
                 {this.addBrewskis()}
             </div>

@@ -44,8 +44,7 @@ class SelectLocationPanel extends Component {
         } else {
             return (
                 <div>
-                    <h1>Add Brewskis</h1>
-                    Hey there, seems like you have no locations setup, please add one before adding a brewski.
+                    Hey there, seems like you have no locations setup, please add one.
                     <Link to="/add-locations">
                         <button>Add Location</button>
                     </Link>

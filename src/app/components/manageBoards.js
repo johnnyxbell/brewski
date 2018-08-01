@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import SelectLocationPanel from './panels/SelectLocationPanel';
 
 const BeerItemWrapper = styled.div`
     display: flex;
@@ -49,28 +50,42 @@ const Button = styled.a`
 
 class ManageBoards extends Component {
     loadBeers() {
-        const { userData } = this.props;
-        console.log('hi', userData.beer);
-        if (userData.beer) {
-            return Object.keys(userData.beer).map(item => (
-                <BeerItem key={item}>
-                    <h3>{userData.beer[item].beerName}</h3>
-                    {userData.beer[item].image ? <img src={userData.beer[item].image} /> : ''}
-                    <p>
-                        {userData.beer[item].beerType}, ABV - {userData.beer[item].ABV}
-                    </p>
-                    <p>{userData.beer[item].country}</p>
-                    <p>
-                        {userData.beer[item].size}, {userData.beer[item].price}
-                    </p>
-                    <p>
-                        {userData.beer[item].size2 ? `${userData.beer[item].size2},  ` : ''}
-                        {userData.beer[item].price2 ? userData.beer[item].price2 : ''}
-                    </p>
-                </BeerItem>
-            ));
-        } else {
+        const { userData, activeLocation } = this.props;
+        console.log('Active Location', activeLocation);
+        if (!userData.location) {
             return '';
+        } else {
+            if (!userData.location[activeLocation].beer) {
+                return <h2>Yo, there is no beers for this location, add one above.</h2>;
+            } else {
+                return Object.keys(userData.location[activeLocation].beer).map(item => (
+                    <BeerItem key={item}>
+                        <h3>{userData.location[activeLocation].beer[item].beerName}</h3>
+                        {userData.location[activeLocation].beer[item].image ? (
+                            <img src={userData.location[activeLocation].beer[item].image} />
+                        ) : (
+                            ''
+                        )}
+                        <p>
+                            {userData.location[activeLocation].beer[item].beerType}, ABV -{' '}
+                            {userData.location[activeLocation].beer[item].ABV}
+                        </p>
+                        <p>{userData.location[activeLocation].beer[item].country}</p>
+                        <p>
+                            {userData.location[activeLocation].beer[item].size},{' '}
+                            {userData.location[activeLocation].beer[item].price}
+                        </p>
+                        <p>
+                            {userData.location[activeLocation].beer[item].size2
+                                ? `${userData.location[activeLocation].beer[item].size2},  `
+                                : ''}
+                            {userData.location[activeLocation].beer[item].price2
+                                ? userData.location[activeLocation].beer[item].price2
+                                : ''}
+                        </p>
+                    </BeerItem>
+                ));
+            }
         }
     }
 
@@ -91,6 +106,7 @@ class ManageBoards extends Component {
         return (
             <div>
                 <h1>Manage Boards</h1>
+                <SelectLocationPanel />
                 <BeerItemWrapper>{this.loadBeers()}</BeerItemWrapper>
                 {this.loadButton()}
             </div>
@@ -100,7 +116,8 @@ class ManageBoards extends Component {
 
 const mapStateToProps = state => ({
     userData: state.userData,
-    googleData: state.googleData
+    googleData: state.googleData,
+    activeLocation: state.activeLocation
 });
 
 export default connect(mapStateToProps)(ManageBoards);
