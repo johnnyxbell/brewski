@@ -1,16 +1,44 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 class Home extends Component {
     loadBeers() {
         const { userData } = this.props;
+
         if (userData.location) {
-            return Object.keys(userData.location).map(item => (
-                <div key={item}>
-                    <h3>{userData.location[item].locationName}</h3>
-                    <p>{userData.location[item].locationAddress}</p>
-                </div>
-            ));
+            let mainItems = [];
+            // Map through the object to get the data
+            Object.keys(userData.location).map(item => {
+                mainItems.push(
+                    <h3>
+                        {userData.location[item].locationName} <span>({userData.location[item].locationAddress})</span>
+                    </h3>
+                );
+                if (userData.location[item].beer) {
+                    Object.keys(userData.location[item].beer).map(j => {
+                        mainItems.push(
+                            <div>
+                                <p>{userData.location[item].beer[j].beerName}</p>
+                                {userData.location[item].beer[j].image ? (
+                                    <img src={userData.location[item].beer[j].image} />
+                                ) : (
+                                    ''
+                                )}
+                            </div>
+                        );
+                    });
+                } else {
+                    mainItems.push(
+                        <div key={item}>
+                            <Link to="/add-brews">
+                                <button>Add Some Beers</button>
+                            </Link>
+                        </div>
+                    );
+                }
+            });
+            return mainItems;
         } else {
             return;
         }

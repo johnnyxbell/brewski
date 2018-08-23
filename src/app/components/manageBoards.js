@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import SelectLocationPanel from './panels/SelectLocationPanel';
 
 const BeerItemWrapper = styled.div`
@@ -55,8 +56,15 @@ class ManageBoards extends Component {
         if (!userData.location) {
             return '';
         } else {
-            if (!userData.location[activeLocation].beer) {
-                return <h2>Yo, there is no beers for this location, add one above.</h2>;
+            if (!userData.location[activeLocation] || !userData.location[activeLocation].beer) {
+                return (
+                    <div>
+                        <p>Yo, there is no beers for this location.</p>
+                        <Link to="/add-brews">
+                            <button>Add a beer</button>
+                        </Link>
+                    </div>
+                );
             } else {
                 return Object.keys(userData.location[activeLocation].beer).map(item => (
                     <BeerItem key={item}>
