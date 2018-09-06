@@ -2,6 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { saveActiveLocation } from '../actionCreators';
+import styled from 'styled-components';
+
+const H3 = styled.h3`
+    margin: 0;
+    padding: 0;
+`;
+
+const Select = styled.select`
+    margin-bottom: 25px;
+`;
 
 class SelectLocationPanel extends Component {
     constructor() {
@@ -15,7 +25,7 @@ class SelectLocationPanel extends Component {
     loadLocationsTitle() {
         const { userData } = this.props;
         if (userData.location) {
-            return <h1>Select Location</h1>;
+            return <H3>Select Location:</H3>;
         } else {
             return '';
         }
@@ -37,9 +47,9 @@ class SelectLocationPanel extends Component {
                 )
             );
             return (
-                <select value={activeLocation} onChange={this.onLocationFilter}>
+                <Select value={activeLocation} onChange={this.onLocationFilter}>
                     {options}
-                </select>
+                </Select>
             );
         } else {
             return (
@@ -55,9 +65,7 @@ class SelectLocationPanel extends Component {
 
     onLocationFilter(e) {
         const { saveActiveLocation } = this.props;
-        console.log('changing location');
         saveActiveLocation(e.target.value);
-        console.log('ActiveLocation', saveActiveLocation(e.target.value));
     }
 
     render() {

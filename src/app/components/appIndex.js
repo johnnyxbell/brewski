@@ -56,6 +56,11 @@ const MyAccount = Loadable({
     loading: Loading
 });
 
+const Upgrade = Loadable({
+    loader: () => import('./upgrade'),
+    loading: Loading
+});
+
 class AppIndex extends Component {
     constructor() {
         super();
@@ -102,6 +107,7 @@ class AppIndex extends Component {
                             <Route path="/manage-boards" exact component={ManageBoards} />
                             <Route path="/keg-health" exact component={KegHealth} />
                             <Route path="/my-account" exact component={MyAccount} />
+                            <Route path="/upgrade" exact component={Upgrade} />
                             <Route path={`/board-${googleData.uid}`} component={Board} />
                         </Switch>
                     </Main>

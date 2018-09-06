@@ -116,7 +116,7 @@ class ManageBoards extends Component {
                 <h1>Manage Boards</h1>
                 <SelectLocationPanel />
                 <BeerItemWrapper>{this.loadBeers()}</BeerItemWrapper>
-                {this.loadButton()}
+                {/* {this.loadButton()} */}
             </div>
         );
     }
