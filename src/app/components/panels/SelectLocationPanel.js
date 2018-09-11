@@ -27,7 +27,7 @@ const Select = styled.select`
 
 const Label = styled.label`
     position: relative;
-    margin-bottom: 50px;
+    margin-bottom: 25px;
     width: 50%;
     display: block;
     svg {
