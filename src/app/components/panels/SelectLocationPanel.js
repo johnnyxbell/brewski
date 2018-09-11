@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { saveActiveLocation } from '../actionCreators';
 import styled from 'styled-components';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faChevronDown from '@fortawesome/fontawesome-free-solid/faChevronDown';
 
 const H3 = styled.h3`
     margin: 0;
@@ -10,7 +12,34 @@ const H3 = styled.h3`
 `;
 
 const Select = styled.select`
-    margin-bottom: 25px;
+    display: block;
+    width: 100%;
+    padding: 10px 70px 10px 13px !important;
+    height: auto !important;
+    border: 1px solid #e3e3e3;
+    border-radius: 3px;
+    background-color: #fff;
+    color: #444444;
+    font-size: 12px;
+    line-height: 16px !important;
+    appearance: none; /* this is must */
+`;
+
+const Label = styled.label`
+    position: relative;
+    margin-bottom: 50px;
+    width: 50%;
+    display: block;
+    svg {
+        position: absolute;
+        top: 11px;
+        right: 10px;
+        pointer-events: none;
+        border-left: 1px solid #e3e3e3;
+        padding-left: 7px;
+        fill: #ccc;
+        color: #ccc;
+    }
 `;
 
 class SelectLocationPanel extends Component {
@@ -47,9 +76,12 @@ class SelectLocationPanel extends Component {
                 )
             );
             return (
-                <Select value={activeLocation} onChange={this.onLocationFilter}>
-                    {options}
-                </Select>
+                <Label>
+                    <Select value={activeLocation} onChange={this.onLocationFilter}>
+                        {options}
+                    </Select>
+                    <FontAwesomeIcon icon={faChevronDown} />
+                </Label>
             );
         } else {
             return (
