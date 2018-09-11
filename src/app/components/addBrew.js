@@ -322,7 +322,7 @@ class AddBrew extends Component {
 
     loadTitle() {
         const { userData, activeLocation } = this.props;
-        if (activeLocation && userData.location[activeLocation].beer) {
+        if (activeLocation && userData.location[activeLocation]) {
             return <h2>Beer List</h2>;
         } else {
             return '';
