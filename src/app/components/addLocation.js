@@ -7,6 +7,7 @@ const AddLocationWrapper = styled.div`
     box-shadow: 0 1px 17px 0 rgba(0, 0, 0, 0.07);
     text-align: right;
     padding: 30px 20px;
+    margin-bottom: 25px;
     button {
         background-color: #006ab6;
         border-radius: 3px;
@@ -47,8 +48,29 @@ const AddLocationForm = styled.form`
     }
 `;
 
+const LocationItemWrapper = styled.div`
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    margin-left: -10px;
+    margin-right: -10px;
+`;
+
 const LocationItem = styled.div`
-button {
+    box-shadow: 0 1px 17px 0 rgba(0, 0, 0, 0.07);
+    padding: 20px;
+    flex: 1 0 20%;
+    max-width: 20%;
+    margin: 0 10px 25px 10px;
+    p {
+        padding: 0;
+        margin: 0;
+    }
+    h3 {
+        padding: 0;
+        margin: 0 0 10px 0;
+    }
+    button {
         background-color: white;
         border: red solid 1px;
         color: red;
@@ -65,6 +87,7 @@ button {
             background: red;
             color: white;
         }
+    }
 `;
 
 class AddLocations extends Component {
@@ -85,8 +108,11 @@ class AddLocations extends Component {
     }
     removeItem(locationId) {
         const { googleData } = this.props;
-        const locationRef = database.ref(`${googleData.uid}/location/${locationId}`);
-        locationRef.remove();
+        let removeLocation = confirm('This will remove the location and all the beers');
+        if (removeLocation === true) {
+            const locationRef = database.ref(`${googleData.uid}/location/${locationId}`);
+            locationRef.remove();
+        }
     }
 
     handleSubmit(e) {
@@ -154,7 +180,7 @@ class AddLocations extends Component {
                     </AddLocationForm>
                     <button onClick={this.handleSubmit}>Add Location 🌍</button>
                 </AddLocationWrapper>
-                {this.loadLocations()}
+                <LocationItemWrapper>{this.loadLocations()}</LocationItemWrapper>
             </div>
         );
     }

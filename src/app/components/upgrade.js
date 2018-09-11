@@ -8,7 +8,7 @@ class Upgrade extends React.Component {
         return (
             <UpgradePanel>
                 <h1>Upgrade</h1>
-                <p>Upgrade info will go here</p>
+                <p>We are currently in free mode, you have access to all the features.</p>
             </UpgradePanel>
         );
     }
