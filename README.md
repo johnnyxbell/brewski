@@ -12,7 +12,7 @@ The ultimate bar menu screen. Update your beers online and have it automatically
 - ~~Add feature to add and remove sizes, up to 3, minimum 1~~
 - ~~Close the user menu when you click away~~
 - ~~Add icons next to menu items~~
-- ~~ Add locations ~~
+- ~~Add locations~~
 - Dashboard / Home ?
 - Add form validation
 - Display the panels with the images better
