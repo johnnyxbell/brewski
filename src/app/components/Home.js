@@ -1,6 +1,48 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+const Button = styled.button`
+    background-color: #006ab6;
+    border-radius: 3px;
+    padding: 10px 35px;
+    width: auto;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+    color: white;
+    transition: opacity 0.5s ease;
+    border: none;
+    text-decoration: none;
+    &:hover {
+        opacity: 0.7;
+    }
+`;
+
+// const HomeItemWrapper = styled.div`
+//     display: flex;
+//     flex-flow: row wrap;
+//     justify-content: flex-start;
+//     margin-left: -10px;
+//     margin-right: -10px;
+// `;
+
+// const HomeItem = styled.div`
+//     box-shadow: 0 1px 17px 0 rgba(0, 0, 0, 0.07);
+//     padding: 20px;
+//     flex: 1 0 20%;
+//     max-width: 20%;
+//     margin: 0 10px 25px 10px;
+//     p {
+//         padding: 0;
+//         margin: 0;
+//     }
+//     h3 {
+//         padding: 0;
+//         margin: 0 0 10px 0;
+//     }
+// `;
 
 class Home extends Component {
     loadBeers() {
@@ -31,8 +73,9 @@ class Home extends Component {
                 } else {
                     mainItems.push(
                         <div key={item}>
+                            <p>No beers yet...</p>
                             <Link to="/add-brews">
-                                <button>Add Some Beers</button>
+                                <Button>Add Some Beers</Button>
                             </Link>
                         </div>
                     );

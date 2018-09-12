@@ -31,7 +31,7 @@ const BeerItem = styled.div`
     }
 `;
 
-const Button = styled.a`
+const Button = styled.button`
     background-color: #006ab6;
     border-radius: 3px;
     padding: 10px 35px;
@@ -61,7 +61,7 @@ class ManageBoards extends Component {
                     <div>
                         <p>Yo, there is no beers for this location.</p>
                         <Link to="/add-brews">
-                            <button>Add a beer</button>
+                            <Button>Add a beer</Button>
                         </Link>
                     </div>
                 );

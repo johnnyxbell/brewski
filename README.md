@@ -12,20 +12,19 @@ The ultimate bar menu screen. Update your beers online and have it automatically
 - ~~Add feature to add and remove sizes, up to 3, minimum 1~~
 - ~~Close the user menu when you click away~~
 - ~~Add icons next to menu items~~
+- ~~ Add locations ~~
+- Dashboard / Home ?
 - Add form validation
 - Display the panels with the images better
 - Work on add beer form to make it look nicer
 - Re order the beers on manage boards to update where they sit in the database
 - Style the board so it looks good on a TV
 - Make the site mobile friendly 
-- Connect jenkins to deploy to s3 bucket (uat for develop branch, prod for master branch)
 
 ## Version 1.1
 
 - Edit beer and save to firebase
-- Add locations
 - Delete a image when you remove the beer
-- Dashboard / Home ?
 
 ## Version 1.x
 
