@@ -20,6 +20,7 @@ The ultimate bar menu screen. Update your beers online and have it automatically
 - Re order the beers on manage boards to update where they sit in the database
 - Style the board so it looks good on a TV
 - Make the site mobile friendly 
+- Remove Lollie
 
 ## Version 1.1
 
